@@ -1,0 +1,14 @@
+{
+	"images": {
+		"localhost:5000/base/gateway:1.0-SNAPSHOT": "./gateway",
+		"localhost:5000/base/coredatastore:1.0-SNAPSHOT": "./coredatastore"
+	},
+	"containers": {
+		"none": "none"
+	},
+	"clusters": {
+		"none": ["none"]
+	},
+	"groups": {
+	}
+}
