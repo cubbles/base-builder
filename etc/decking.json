@@ -1,7 +1,21 @@
 {
 	"images": {
-		"docker.webblebase.net/base/gateway:1.0-SNAPSHOT": "./gateway",
-		"docker.webblebase.net/base/coredatastore:1.0-SNAPSHOT": "./coredatastore"
+		"docker.webblebase.net/base/gateway": {
+			"path": "./gateway",
+			"context": "."
+		},
+		"docker.webblebase.net/base/configstore_volume": {
+			"path": "./configstore",
+			"context": "."
+		},
+		"docker.webblebase.net/base/coredatastore": {
+			"path":  "./coredatastore",
+			"context": "."
+		},
+		"docker.webblebase.net/base/coredatastore_volume": {
+			"path": "./coredatastore_volume",
+			"context": "."
+		}
 	},
 	"containers": {
 		"none": "none"

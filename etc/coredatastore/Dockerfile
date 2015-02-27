@@ -2,11 +2,11 @@ FROM debian:wheezy
 
 MAINTAINER Hans-Dieter Böhlau hans-dieter.boehlau@incowia.com
 
-# Install instructions from https://cwiki.apache.org/confluence/display/COUCHDB/Debian
-
-ENV COUCHDB_VERSION 1.6.1
-
+# add our user and group first to make sure their IDs get assigned consistently, regardless of other deps added later
 RUN groupadd -r couchdb && useradd -d /var/lib/couchdb -g couchdb couchdb
+
+# Install instructions from https://cwiki.apache.org/confluence/display/COUCHDB/Debian
+ENV COUCHDB_VERSION 1.6.1
 
 # download dependencies, compile and install couchdb
 RUN apt-get update -y \
@@ -30,13 +30,15 @@ RUN apt-get update -y \
   && rm -rf /var/lib/apt/lists/* /usr/src/couchdb /couchdb.tar.gz* /KEYS /esl.deb
 
 # grab gosu for easy step-down from root
-RUN \ 
-# gpg --keyserver pool.sks-keyservers.net --recv-keys B42F6819007F00F88E364FD4036A9C25BF357DD4 &&\
-  curl -o /usr/local/bin/gosu -SL "https://github.com/tianon/gosu/releases/download/1.2/gosu-$(dpkg --print-architecture)" \
-#  && curl -o /usr/local/bin/gosu.asc -SL "https://github.com/tianon/gosu/releases/download/1.2/gosu-$(dpkg --print-architecture).asc" \
-#  && gpg --verify /usr/local/bin/gosu.asc \
-#  && rm /usr/local/bin/gosu.asc \
-  && chmod +x /usr/local/bin/gosu
+RUN curl -o /usr/local/bin/gosu -SL "https://github.com/tianon/gosu/releases/download/1.2/gosu-$(dpkg --print-architecture)" \
+&& chmod +x /usr/local/bin/gosu
+
+# provide the runtime config
+COPY ./usr/local/etc/couchdb /usr/local/etc/couchdb
+# provide initial config scripts (called from to entrypoint)
+COPY ./opt/coredatastore /opt/coredatastore
+# provide entrypoint
+COPY ./docker-entrypoint.sh /entrypoint.sh
 
 # permissions
 RUN chown -R couchdb:couchdb \
@@ -47,9 +49,9 @@ RUN chown -R couchdb:couchdb \
     /usr/local/var/lib/couchdb /usr/local/var/log/couchdb /usr/local/var/run/couchdb \
   && mkdir -p /var/lib/couchdb
 
-# provide the config
-COPY ./coredatastore/usr/local/etc/couchdb/local.ini /usr/local/etc/couchdb/local.ini
-COPY ./coredatastore/docker-entrypoint.sh /entrypoint.sh
+# Expose to the outside
+#RUN sed -e 's/^bind_address = .*$/bind_address = 0.0.0.0/' -i /usr/local/etc/couchdb/default.ini
+#COPY ./docker-entrypoint.sh /entrypoint.sh
 
 # Define mountable directories.
 VOLUME ["/usr/local/var/log/couchdb", "/usr/local/var/lib/couchdb"]
