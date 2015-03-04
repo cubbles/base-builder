@@ -4,10 +4,6 @@
 			"path": "./gateway",
 			"context": "."
 		},
-		"docker.webblebase.net/base/configstore_volume": {
-			"path": "./configstore",
-			"context": "."
-		},
 		"docker.webblebase.net/base/coredatastore": {
 			"path":  "./coredatastore",
 			"context": "."
@@ -15,6 +11,10 @@
 		"docker.webblebase.net/base/coredatastore_volume": {
 			"path": "./coredatastore_volume",
 			"context": "."
+		},
+		"docker.webblebase.net/base/serviceconfigvolume": {
+		  "path": "./serviceconfigvolume",
+		  "context": "."
 		}
 	},
 	"containers": {

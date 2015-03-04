@@ -38,15 +38,15 @@ case "$1" in
 		;;
 
 	push)
-		# check for a passed container name
+		# check for a passed image name
 		if [ ! -z "$3" ]; then {
 			echo "pushing image $3"
 			docker login -u docker -p $2 -e hrbu@incowia.com docker.webblebase.net
-			docker push $3
+			docker push $3:$4
 			exit 0
 		}
 		else {
-			echo "usage: push [password] [image]"
+			echo "usage: push [password] [image] [tag]"
 			exit 1
 		}
 		fi
@@ -60,7 +60,7 @@ case "$1" in
 
 
 	*)
-		echo "usage: $0 { build [image | all] | push [password] [image] | clean }" >&2
+		echo "usage: $0 { build [image | all] | push [password] [image] [tag] | clean }" >&2
 		exit 1
 		;;
 esac
