@@ -20,20 +20,9 @@ function isCouchUp {
     return 0
 }
 
-function isCouchUp2Date {
-    echo "Requesting database 'webpackages-store'"
-    local responseCode=$(curl --write-out %{http_code} --silent --output /dev/null http://${HOST}/webpackages-store)
-    echo "ResponseCode=$responseCode"
-    if [ $responseCode == "200" ]; then
-        return 0
-    else
-        return 1
-    fi
-}
-
-function doUpdate {
+function setup {
     # 1) create database
-    local db_response1="$(curl -X PUT http://${HOST}/webpackages-store)"
+    local db_response1="$(curl -X PUT http://${HOST}/webpackage-store)"
     # 2) create admin
     local db_response2="$(curl -X PUT http://${HOST}/_config/admins/admin -d '"admin"')"
     # return responses
@@ -48,11 +37,6 @@ else
     exit 1
 fi
 
-if isCouchUp2Date ; then
-    echo "CouchDB is up2date."
-    exit 0
-fi
-
 # do update
-doUpdate
-echo "CouchDB update finished."
+setup
+echo "CouchDB setup finished."

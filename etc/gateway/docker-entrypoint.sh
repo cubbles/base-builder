@@ -10,7 +10,7 @@ if [ "$1" == "nginx" ]; then
         ln -sf $NGINXCONF /etc/nginx/nginx.conf
     }
     fi
-    # replace the /etc/nginx/conf-base.d folder ...
+    # replace the /etc/nginx/conf.d folder ...
     NGINXCONFD=/opt/base/gateway/conf-base.d
     if [ -e $NGINXCONFD ]; then {
         ln -sf $NGINXCONFD /etc/nginx/conf-base.d
