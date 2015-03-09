@@ -35,11 +35,20 @@ case "$1" in
 		if [ ! -z "$3" ]; then {
 			echo "pushing image $3"
 			docker login -u docker -p $2 -e hrbu@incowia.com docker.webblebase.net
-			docker push $3:$4
+			if [ "$3" == "all" ]; then {
+				docker push "docker.webblebase.net/base/gateway":$4
+				docker push "docker.webblebase.net/base/coredatastore":$4
+				docker push "docker.webblebase.net/base/coredatastore_volume":$4
+				docker push "docker.webblebase.net/base/serviceconfigvolume":$4
+			}
+			else {
+				docker push $3:$4
+			}
+			fi
 			exit 0
 		}
 		else {
-			echo "usage: push [password] [image] [tag]"
+			echo "usage: push [password] [image | all] [tag]"
 			exit 1
 		}
 		fi
@@ -53,7 +62,7 @@ case "$1" in
 
 
 	*)
-		echo "usage: $0 { build [image | all] | push [password] [image] [tag] | clean }" >&2
+		echo "usage: $0 { build [image | all] | push [password] [image | all] [tag] | clean }" >&2
 		exit 1
 		;;
 esac
