@@ -6,14 +6,14 @@ echo "$0 $@"
 if [ "$1" == "nginx" ]; then
     # replace the /etc/nginx/nginx.conf with the one from the mounted volume
     NGINXCONF=/opt/base/gateway/nginx.conf
+    NGINXCONFD=/opt/base/gateway/conf.d
     if [ -e $NGINXCONF ]; then {
         ln -sf $NGINXCONF /etc/nginx/nginx.conf
     }
     fi
-    # replace the /etc/nginx/conf.d folder ...
-    NGINXCONFD=/opt/base/gateway/conf-base.d
+    # chmod as nginx need 'other' rw permissions to htpasswd-files
     if [ -e $NGINXCONFD ]; then {
-        ln -sf $NGINXCONFD /etc/nginx/conf-base.d
+        chmod -R 775 /opt
     }
     fi
 fi
