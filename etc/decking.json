@@ -1,18 +1,18 @@
 {
 	"images": {
-		"docker.webblebase.net/base/gateway": {
+		"docker.webblebase.net:444/base/gateway": {
 			"path": "./gateway",
 			"context": "."
 		},
-		"docker.webblebase.net/base/coredatastore": {
+		"docker.webblebase.net:444/base/coredatastore": {
 			"path":  "./coredatastore",
 			"context": "."
 		},
-		"docker.webblebase.net/base/coredatastore_volume": {
+		"docker.webblebase.net:444/base/coredatastore_volume": {
 			"path": "./coredatastore_volume",
 			"context": "."
 		},
-		"docker.webblebase.net/base/serviceconfigvolume": {
+		"docker.webblebase.net:444/base/serviceconfigvolume": {
 		  "path": "./serviceconfigvolume",
 		  "context": "."
 		}
