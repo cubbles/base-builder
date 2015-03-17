@@ -11,8 +11,11 @@ echo
 # "Prepare environment ..."
 . bin/setenv-default.sh
 . bin/setenv-local.sh
+. bin/prepare_build.sh
 showEnvironment
 
+# define images
+COREDATASTORE="docker.webblebase.net:444/base/coredatastore"
 
 # "Do processing ..."
 cd etc # contains decking.json
@@ -26,6 +29,10 @@ case "$1" in
 		else {
 			IMAGE_TAG="latest"
 			if [ ! -z "$3" ]; then { IMAGE_TAG=$3; }
+			fi
+			if [[ "$2" == "$COREDATASTORE" || "$2" == all ]]; then {
+				prepare_coredatastore
+			}
 			fi
 			# start building
 			echo "building image $2:$IMAGE_TAG"

@@ -11,3 +11,9 @@ pids
 
 # webstorm project file
 .idea
+
+# build folder
+build
+
+# resources created during build
+etc\coredatastore\opt\coredatastore\couchapp_crc-utils\
