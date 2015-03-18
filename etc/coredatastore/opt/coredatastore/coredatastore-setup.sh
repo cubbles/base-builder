@@ -21,12 +21,18 @@ function isCouchUp {
 }
 
 function setup {
+    # 0) delayed_commits
+    local response0="$(curl -X PUT http://${HOST}/_config/couchdb/delayed_commits -d '"false"')"
     # 1) create database
-    local db_response1="$(curl -X PUT http://${HOST}/webpackage-store)"
-    # 2) create admin
-    local db_response2="$(curl -X PUT http://${HOST}/_config/admins/admin -d '"admin"')"
-    # return responses
-    echo -e "$db_response1\n$db_response2"
+    local response1="$(curl -X PUT http://${HOST}/webpackage-store)"
+    # 2) deploy couchapp_crc-utils
+    cd /opt/coredatastore/setup-resources/couchapp_crc-utils
+    local response2="$(grunt couchDeployLocal)"
+
+    # lastly) create admin
+    local responseSecure="$(curl -X PUT http://${HOST}/_config/admins/admin -d '"admin"')"
+    # .. and return responses
+    echo -e "$response0\nresponse1\n$response2\n$responseSecure"
 }
 
 #############

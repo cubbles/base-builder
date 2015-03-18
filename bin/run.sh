@@ -1,7 +1,8 @@
 #!/bin/sh
 # purpose: manage building of base-images
 # @see http://decking.io/
-
+CURRENT_DIR=$(pwd)
+WORK_DIR=$CURRENT_DIR/etc
 # make sure, the user has done a cd into the bundle (otherwise relative paths do not work)
 if [ ! -e bin/check-file ]; then { echo >&2 "Please cd into the bundle before running this script."; exit 1; }
 fi
@@ -18,7 +19,7 @@ showEnvironment
 COREDATASTORE="docker.webblebase.net:444/base/coredatastore"
 
 # "Do processing ..."
-cd etc # contains decking.json
+cd $WORK_DIR # contains decking.json
 case "$1" in
 	build)
 		if [ ! $# -eq 3 ]; then {
@@ -36,6 +37,7 @@ case "$1" in
 			fi
 			# start building
 			echo "building image $2:$IMAGE_TAG"
+			cd $WORK_DIR
 			node $NODE_MODULE_DECKING/bin/decking build $2 --tag $IMAGE_TAG
 		}
 		fi
