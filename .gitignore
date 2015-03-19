@@ -16,4 +16,4 @@ pids
 build
 
 # resources created during build
-etc\coredatastore\opt\coredatastore\setup-resources\
+etc/coredatastore/opt/coredatastore/setup-resources/couchapp_crc-utils
