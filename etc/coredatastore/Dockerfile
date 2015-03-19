@@ -64,7 +64,7 @@ COPY ./usr/local/etc/couchdb /usr/local/etc/couchdb
 # provide initial config scripts (called from to entrypoint)
 COPY ./opt/coredatastore /opt/coredatastore
 RUN cd /opt/coredatastore/setup-resources/couchapp_crc-utils \
- && npm install -g grunt-cli \
+ && npm install -g grunt-cli@0.1.13 \
  && npm install
 
 

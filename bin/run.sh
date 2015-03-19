@@ -17,6 +17,7 @@ showEnvironment
 
 # define images
 COREDATASTORE="docker.webblebase.net:444/base/coredatastore"
+WEBPACKAGESEARCH="docker.webblebase.net:444/base/webpackagesearch"
 
 # "Do processing ..."
 cd $WORK_DIR # contains decking.json
@@ -28,13 +29,20 @@ case "$1" in
 			exit 1
 		}
 		else {
-			IMAGE_TAG="latest"
-			if [ ! -z "$3" ]; then { IMAGE_TAG=$3; }
-			fi
+			# image param
 			if [[ "$2" == "$COREDATASTORE" || "$2" == all ]]; then {
 				prepare_coredatastore
 			}
 			fi
+			if [[ "$2" == "$WEBPACKAGESEARCH" || "$2" == all ]]; then {
+				prepare_webpackagesearch
+			}
+			fi
+			# tag param
+			IMAGE_TAG="latest"
+			if [ ! -z "$3" ]; then { IMAGE_TAG=$3; }
+			fi
+
 			# start building
 			echo "building image $2:$IMAGE_TAG"
 			cd $WORK_DIR
