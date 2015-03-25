@@ -1,4 +1,7 @@
 #!/bin/sh
+#If a command exits with an error and the caller does not check such error, the script aborts immediately.
+set -e
+
 # purpose: manage building of base-images
 # @see http://decking.io/
 CURRENT_DIR=$(pwd)

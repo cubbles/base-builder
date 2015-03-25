@@ -1,18 +1,21 @@
 #!/bin/bash
 
-HOSTNAME=localhost
+HOSTNAME=coredatastore
 PORT=5984
-HOST="${HOSTNAME}:${PORT}"
+COUCH_URL="http://${HOSTNAME}:${PORT}"
+DATABASE_URL="${COUCH_URL}/webpackage-store"
 
 ##############
 function isCouchUp {
-    echo "Waiting for couchdb..."
+    echo "Waiting for couchdb and database to be available ..."
+    curl_couch="curl -X GET ${COUCH_URL} --output /dev/null"
+    curl_database="curl -X GET --write-out %{http_code} --output /dev/null ${DATABASE_URL}"
     local timeout=20
-    while ! curl -X GET http://${HOST}/ >/dev/null
+    while ( ! $(${curl_couch}) ) || [ 404 == $(${curl_database}) ]
     do
         timeout=$(expr $timeout - 1)
         if [ $timeout -eq 0 ]; then
-            # CouchDb is down (1=false)
+            # couch or database not available (1==false)
             return 1
         fi
         sleep 1
@@ -22,17 +25,34 @@ function isCouchUp {
 
 function setup {
     # deploy couchapp
-    cd /opt/coredatastore/setup-resources/couchapp_webpackagesearch
-    local response="$(grunt couchDeployCoreDataStore)"
-    # .. and return responses
-    echo -e "$response"
+    # note: this is a manually defined design-doc
+    # ... for background-knowledge @see https://www.npmjs.com/package/loopback-connector-couch
+    cd /opt/webpackagesearch/setup-resources/couchapp-webpackagesearch
+    grunt_couchDeployCoreDataStore="grunt couchDeployCoreDataStore"
+    local attempts=20
+    local timeout=$attempts
+    local grunt_couchDeployCoreDataStoreResponse=""
+    until [[ $grunt_couchDeployCoreDataStoreResponse == *"Done, without errors."* ]]
+    do
+        timeout=$(expr $timeout - 1)
+        if [ $timeout -eq 0 ]; then
+            # deployment failed (1==false)
+            return 1
+        fi
+        sleep 1
+        echo "... attempt $(expr $attempts - $timeout) of $attempts"
+        grunt_couchDeployCoreDataStoreResponse=$(${grunt_couchDeployCoreDataStore})
+        echo "$grunt_couchDeployCoreDataStoreResponse"
+    done
+    return 0
 }
 
 #############
+echo "CouchDB setup ..."
 if isCouchUp ; then
-    echo "CouchDB is running."
+    echo "CouchDB and Database are available."
 else
-    echo "Error. Expected running CouchDB!"
+    echo "Error. Expected CouchDB and Database to be available!"
     exit 1
 fi
 

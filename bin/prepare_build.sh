@@ -1,7 +1,6 @@
 #!/bin/sh
-CURRENT_DIR=$(pwd)
 RESOURCE_DIR_NAME=setup-resources
-APP_DIR_NAME=setup-resources
+APP_DIR_NAME=app
 
 # --------- functions ---------
 prepare_coredatastore(){
@@ -14,30 +13,32 @@ prepare_coredatastore(){
   fi
   sudo mkdir $RESOURCE_DIR_NAME && cd $RESOURCE_DIR_NAME
   echo "Accessing Git ..."
-  sudo GIT_SSL_NO_VERIFY=true git clone https://pmt.incowia.de/webble/r/client/utilities/couchapp_crc-utils.git
+  sudo GIT_SSL_NO_VERIFY=true git clone https://base-builder:k5TR6J25wQDuT37anAqE@pmt.incowia.de/webble/r/client/utilities/couchapp_crc-utils.git
   echo "Accessing Git ... done."
   cd couchapp_crc-utils && sudo rm -rf .git
 }
 
 prepare_webpackagesearch(){
-  cd webpackagesearch/opt/webpackagesearch
+  SERVICE_WORK_DIR=$WORK_DIR/webpackagesearch/opt/webpackagesearch
 
   # webpackagesearch
+  cd $SERVICE_WORK_DIR
   _cleanFolder $APP_DIR_NAME
   WEBPACKAGESEARCH=webpackagesearch
   echo "Accessing Git ... download '$WEBPACKAGESEARCH'"
-  sudo GIT_SSL_NO_VERIFY=true git clone https://pmt.incowia.de/webble/r/base/webpackagesearch/$WEBPACKAGESEARCH.git $APP_DIR_NAME
+  sudo GIT_SSL_NO_VERIFY=true git clone https://base-builder:k5TR6J25wQDuT37anAqE@pmt.incowia.de/webble/r/base/webpackagesearch/$WEBPACKAGESEARCH.git $APP_DIR_NAME
+  cd $APP_DIR_NAME && sudo GIT_SSL_NO_VERIFY=true git fetch && sudo git checkout 0.4.1 && sudo rm -rf .git
   echo "Accessing Git ... done."
-  cd $APP_DIR_NAME && sudo rm -rf .git
 
   # couchapp-webpackagesearch
+  cd $SERVICE_WORK_DIR
   _cleanFolder $RESOURCE_DIR_NAME
   COUCHAPPWEBPACKAGESEARCH=couchapp-webpackagesearch
   cd $RESOURCE_DIR_NAME
   echo "Accessing Git ... download '$COUCHAPPWEBPACKAGESEARCH'"
-  sudo GIT_SSL_NO_VERIFY=true git clone https://pmt.incowia.de/webble/r/base/webpackagesearch/$COUCHAPPWEBPACKAGESEARCH.git
+  sudo GIT_SSL_NO_VERIFY=true git clone https://base-builder:k5TR6J25wQDuT37anAqE@pmt.incowia.de/webble/r/base/webpackagesearch/$COUCHAPPWEBPACKAGESEARCH.git
+  cd $COUCHAPPWEBPACKAGESEARCH && sudo GIT_SSL_NO_VERIFY=true git fetch && sudo git checkout 0.3.0 && sudo rm -rf .git
   echo "Accessing Git ... done."
-  cd $COUCHAPPWEBPACKAGESEARCH && sudo rm -rf .git
 }
 
 _cleanFolder () {

@@ -17,3 +17,5 @@ build
 
 # resources created during build
 etc/coredatastore/opt/coredatastore/setup-resources/couchapp_crc-utils
+etc/webpackagesearch/opt/webpackagesearch/app
+etc/webpackagesearch/opt/webpackagesearch/setup-resources/couchapp-webpackagesearch
