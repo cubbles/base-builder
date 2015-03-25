@@ -8,7 +8,7 @@ if [ "$1" == "slc" ]; then {
     # @see http://docs.strongloop.com/display/public/LB/datasources.json
     DATASOURCECONF=/opt/base/webpackagesearch/app/server/datasources.local.json
     if [ -e $DATASOURCECONF ]; then {
-        ln -sf $NGINXCONF /opt/webpackagesearch/app/server/datasources.local.json
+        ln -sf $DATASOURCECONF /opt/webpackagesearch/app/server/datasources.local.json
     }
     fi
 

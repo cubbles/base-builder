@@ -37,7 +37,7 @@ prepare_webpackagesearch(){
   cd $RESOURCE_DIR_NAME
   echo "Accessing Git ... download '$COUCHAPPWEBPACKAGESEARCH'"
   sudo GIT_SSL_NO_VERIFY=true git clone https://base-builder:k5TR6J25wQDuT37anAqE@pmt.incowia.de/webble/r/base/webpackagesearch/$COUCHAPPWEBPACKAGESEARCH.git
-  cd $COUCHAPPWEBPACKAGESEARCH && sudo GIT_SSL_NO_VERIFY=true git fetch && sudo git checkout 0.3.0 && sudo rm -rf .git
+  cd $COUCHAPPWEBPACKAGESEARCH && sudo GIT_SSL_NO_VERIFY=true git fetch && sudo git checkout 0.3.1 && sudo rm -rf .git
   echo "Accessing Git ... done."
 }
 
