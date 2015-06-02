@@ -28,11 +28,14 @@ function setup {
     # 2) deploy couchapp_crc-utils
     cd /opt/coredatastore/setup-resources/couchapp_crc-utils
     local response2="$(grunt couchDeployLocal)"
+    # 3) deploy couchapp_webpackage-validator
+    cd /opt/coredatastore/setup-resources/couchapp_webpackage-validator
+    local response3="$(grunt couchDeployLocal)"
 
     # lastly) create admin
     local responseSecure="$(curl -X PUT http://${HOST}/_config/admins/admin -d '"admin"')"
     # .. and return responses
-    echo -e "$response0\nresponse1\n$response2\n$responseSecure"
+    echo -e "$response0\nresponse1\n$response2\n$response3\n$responseSecure"
 }
 
 #############

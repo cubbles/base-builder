@@ -66,6 +66,10 @@ COPY ./opt/coredatastore /opt/coredatastore
 RUN cd /opt/coredatastore/setup-resources/couchapp_crc-utils \
  && npm install -g grunt-cli@0.1.13 \
  && npm install
+RUN cd /opt/coredatastore/setup-resources/couchapp_webpackage-validator \
+ && npm install -g grunt-cli@0.1.13 \
+ && npm install
+
 
 
 # provide entrypoint

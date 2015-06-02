@@ -14,8 +14,10 @@ prepare_coredatastore(){
   sudo mkdir $RESOURCE_DIR_NAME && cd $RESOURCE_DIR_NAME
   echo "Accessing Git ..."
   sudo GIT_SSL_NO_VERIFY=true git clone https://base-builder:k5TR6J25wQDuT37anAqE@pmt.incowia.de/webble/r/client/utilities/couchapp_crc-utils.git
+  sudo GIT_SSL_NO_VERIFY=true git clone https://base-builder:k5TR6J25wQDuT37anAqE@pmt.incowia.de/webble/r/base/coredatastore/couchapp_webpackage-validator.git
   echo "Accessing Git ... done."
-  cd couchapp_crc-utils && sudo rm -rf .git
+  cd couchapp_crc-utils && sudo GIT_SSL_NO_VERIFY=true git fetch && sudo git checkout 0.1 && sudo rm -rf .git && cd ..
+  cd couchapp_webpackage-validator && sudo GIT_SSL_NO_VERIFY=true git fetch && sudo git checkout 0.1 && sudo rm -rf .git
 }
 
 prepare_webpackagesearch(){
