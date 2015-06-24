@@ -38,7 +38,7 @@ case "$1" in
 			}
 			fi
 			if [[ "$2" == "$WEBPACKAGESEARCH" || "$2" == all ]]; then {
-				prepare_webpackagesearch
+				prepare_webpackagesearch $WORK_DIR
 			}
 			fi
 			# tag param

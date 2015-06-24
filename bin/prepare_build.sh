@@ -21,7 +21,7 @@ prepare_coredatastore(){
 }
 
 prepare_webpackagesearch(){
-  SERVICE_WORK_DIR=$WORK_DIR/webpackagesearch/opt/webpackagesearch
+  SERVICE_WORK_DIR=$1/webpackagesearch/opt/webpackagesearch
 
   # webpackagesearch
   cd $SERVICE_WORK_DIR
@@ -29,7 +29,7 @@ prepare_webpackagesearch(){
   WEBPACKAGESEARCH=webpackagesearch
   echo "Accessing Git ... download '$WEBPACKAGESEARCH'"
   sudo GIT_SSL_NO_VERIFY=true git clone https://base-builder:k5TR6J25wQDuT37anAqE@pmt.incowia.de/webble/r/base/webpackagesearch/$WEBPACKAGESEARCH.git $APP_DIR_NAME
-  cd $APP_DIR_NAME && sudo GIT_SSL_NO_VERIFY=true git fetch && sudo git checkout 0.4.1 && sudo rm -rf .git
+  cd $APP_DIR_NAME && sudo GIT_SSL_NO_VERIFY=true git fetch && sudo git checkout 0.5.1 && sudo rm -rf .git
   echo "Accessing Git ... done."
 
   # couchapp-webpackagesearch
@@ -39,7 +39,7 @@ prepare_webpackagesearch(){
   cd $RESOURCE_DIR_NAME
   echo "Accessing Git ... download '$COUCHAPPWEBPACKAGESEARCH'"
   sudo GIT_SSL_NO_VERIFY=true git clone https://base-builder:k5TR6J25wQDuT37anAqE@pmt.incowia.de/webble/r/base/webpackagesearch/$COUCHAPPWEBPACKAGESEARCH.git
-  cd $COUCHAPPWEBPACKAGESEARCH && sudo GIT_SSL_NO_VERIFY=true git fetch && sudo git checkout 0.3.1 && sudo rm -rf .git
+  cd $COUCHAPPWEBPACKAGESEARCH && sudo GIT_SSL_NO_VERIFY=true git fetch && sudo git checkout 0.4.0 && sudo rm -rf .git
   echo "Accessing Git ... done."
 }
 
