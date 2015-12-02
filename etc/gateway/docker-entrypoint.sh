@@ -17,23 +17,25 @@ if [ "$1" == "nginx" ]; then
     }
     fi
 
-    # base.conf: replace ssl_certificate directive
+    # base.ssl: replace ssl_certificate directive
     OLD=".*ssl_certificate .*"
     NEW="#ssl_certificate ... commented out by dockers entrypoint script"
     # if value set within the environment (set by docker)
     if [ ! -z "$SSL_CERTIFICATE" ]; then { NEW="ssl_certificate $SSL_CERTIFICATE ;"; }; fi
     echo $NEW
-    sed -i -- "s/$OLD/${NEW//\//\\/}/" /opt/base/gateway/conf.d/base.conf # note: NEW will be escaped using bash find and replace
+    sed -i -- "s/$OLD/${NEW//\//\\/}/" /opt/base/gateway/conf.d/base.ssl # note: NEW will be escaped using bash find and replace
 
-    # base.conf: replace ssl_certificate_key directive
+    # base.ssl: replace ssl_certificate_key directive
     OLD=".*ssl_certificate_key .*"
     NEW="#ssl_certificate_key ... commented out by dockers entrypoint script"
     # if value set within the environment (set by docker)
     if [ ! -z "$SSL_CERTIFICATE_KEY" ]; then { NEW="ssl_certificate_key $SSL_CERTIFICATE_KEY ;"; }; fi
     echo $NEW
-    sed -i -- "s/$OLD/${NEW//\//\\/}/" /opt/base/gateway/conf.d/base.conf # note: NEW will be escaped using bash find and replace
+    sed -i -- "s/$OLD/${NEW//\//\\/}/" /opt/base/gateway/conf.d/base.ssl # note: NEW will be escaped using bash find and replace
 
-
+    # start nginx
+    echo -e "Starting nginx..."
+    exec /usr/local/nginx/sbin/nginx -g "daemon off;"
 fi
 
 # otherwise, execute the passed command
