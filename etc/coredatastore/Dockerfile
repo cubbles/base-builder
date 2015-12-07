@@ -63,11 +63,12 @@ RUN curl -o /usr/local/bin/gosu -SL "https://github.com/tianon/gosu/releases/dow
 COPY ./usr/local/etc/couchdb /usr/local/etc/couchdb
 # provide initial config scripts (called from to entrypoint)
 COPY ./opt/coredatastore /opt/coredatastore
+RUN npm install -g grunt-cli@0.1.13
 RUN cd /opt/coredatastore/setup-resources/couchapp_crc-utils \
- && npm install -g grunt-cli@0.1.13 \
  && npm install
 RUN cd /opt/coredatastore/setup-resources/couchapp_webpackage-validator \
- && npm install -g grunt-cli@0.1.13 \
+ && npm install
+RUN cd /opt/coredatastore/setup-resources/couchapp-artifactsearch \
  && npm install
 
 
