@@ -19,7 +19,7 @@ prepare_coredatastore(){
   echo "Accessing Git ... done."
   cd couchapp_crc-utils && sudo GIT_SSL_NO_VERIFY=true git fetch && sudo git checkout 0.1 && sudo rm -rf .git && cd ..
   cd couchapp_webpackage-validator && sudo GIT_SSL_NO_VERIFY=true git fetch && sudo git checkout v0.3.2 && sudo rm -rf .git && cd ..
-  cd couchapp-artifactsearch && sudo GIT_SSL_NO_VERIFY=true git fetch && sudo git checkout v0.2.2 && sudo rm -rf .git
+  cd couchapp-artifactsearch && sudo GIT_SSL_NO_VERIFY=true git fetch && sudo git checkout v0.4.0 && sudo rm -rf .git
 }
 
 prepare_webpackagesearch(){
