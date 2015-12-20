@@ -19,6 +19,14 @@
     "docker.webblebase.net:444/base/serviceconfigvolume": {
       "path": "./serviceconfigvolume",
       "context": "."
+    },
+    "docker.webblebase.net:444/base/uploadauthentication": {
+      "path": "./uploadauthentication",
+      "context": "."
+    },
+    "docker.webblebase.net:444/base/abstract-node": {
+      "path": "./abstract-node",
+      "context": "."
     }
   },
   "containers": {

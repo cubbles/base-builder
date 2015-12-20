@@ -35,7 +35,9 @@ if [ "$1" == "nginx" ]; then
 
     # start nginx
     echo -e "Starting nginx..."
-    exec /usr/local/nginx/sbin/nginx -g "daemon off;"
+    # exec /usr/local/nginx/sbin/nginx -g "daemon off;"
+    cd /opt/base/gateway
+    nodemon $NODEMON_OPTIONS --exec "/usr/local/nginx/sbin/nginx"
 fi
 
 # otherwise, execute the passed command

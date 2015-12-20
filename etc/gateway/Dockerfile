@@ -1,4 +1,4 @@
-FROM debian:wheezy
+FROM docker.webblebase.net:444/base/abstract-node:0.3
 
 MAINTAINER Thomas Frank thomas.frank@incowia.com
 
@@ -16,13 +16,13 @@ ENV nginxConf='/etc/nginx/nginx.conf'
 
 
 # Packages needed to actually build nginx
-    # build-essential = basic build tools, eg. 'gcc' and 'make'
-    # curl = tool to download the nginx tarball
+    # build-essential (from parent image) = basic build tools, eg. 'gcc' and 'make'
+    # curl (from parent image) = tool to download the nginx tarball
+    # ca-certificates (from parent image) = needed to download additional modules (shipped version is to old)
     # libpcre3-dev = library needed to build the rewrite module of nginx
     # libssl-dev = library needed to build ssl/https support in nginx
-    # ca-certificates = needed to download additional modules (shipped version is to old)
     # libncurses-dev, libreadline-dev = needed for LUA module
-ENV buildDeps='build-essential curl libpcre3-dev libssl-dev ca-certificates libncurses-dev libreadline-dev'
+ENV buildDeps='build-essential libpcre3-dev libssl-dev libncurses-dev libreadline-dev'
 
 # prepare the system
 RUN  set -x \
@@ -103,4 +103,4 @@ EXPOSE 80 443
 WORKDIR $nginxHome
 
 ENTRYPOINT ["/entrypoint.sh"]
-CMD ["nginx", "-g", "daemon off;"]
+CMD ["nginx"]

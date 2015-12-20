@@ -45,6 +45,20 @@ prepare_webpackagesearch(){
   echo "Accessing Git ... done."
 }
 
+prepare_uploadauthentication(){
+  cd uploadauthentication/opt/uploadauthentication
+  if [ -d $RESOURCE_DIR_NAME ]; then {
+    echo "Remove old setup-resources ..."
+    sudo rm -r $RESOURCE_DIR_NAME
+    echo "Remove old setup-resources ... done."
+  }
+  fi
+  sudo mkdir $RESOURCE_DIR_NAME && cd $RESOURCE_DIR_NAME
+  echo "Accessing Git ..."
+  sudo GIT_SSL_NO_VERIFY=true git clone https://base-builder:k5TR6J25wQDuT37anAqE@pmt.incowia.de/webble/r/base/upload-authentication/upload-authentication-service.git
+  echo "Accessing Git ... done."
+  cd upload-authentication-service && sudo GIT_SSL_NO_VERIFY=true git fetch && sudo git checkout && sudo rm -rf .git && cd ..
+}
 _cleanFolder () {
   if [ -d $1 ]; then {
     echo "Clean $1 ..."

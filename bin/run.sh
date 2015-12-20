@@ -21,6 +21,7 @@ showEnvironment
 # define images
 COREDATASTORE="docker.webblebase.net:444/base/coredatastore"
 WEBPACKAGESEARCH="docker.webblebase.net:444/base/webpackagesearch"
+UPLOADAUTHENTICATION="docker.webblebase.net:444/base/uploadauthentication"
 
 # "Do processing ..."
 cd $WORK_DIR # contains decking.json
@@ -39,6 +40,10 @@ case "$1" in
 			fi
 			if [[ "$2" == "$WEBPACKAGESEARCH" || "$2" == all ]]; then {
 				prepare_webpackagesearch $WORK_DIR
+			}
+			fi
+			if [[ "$2" == "$UPLOADAUTHENTICATION" || "$2" == all ]]; then {
+				prepare_uploadauthentication
 			}
 			fi
 			# tag param
