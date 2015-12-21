@@ -6,11 +6,13 @@ MAINTAINER Hans-Dieter Böhlau hans-dieter.boehlau@incowia.com
 # curl = used to request remote or local resources
 # ca-certificates = needed to download additional modules (shipped version is to old)
 # procpx = process management tools like 'ps'
+# nano = simple text editor
 ##############################
 RUN apt-get update && apt-get install -y --no-install-recommends \
 		ca-certificates \
 		curl \
 		procps \
+		nano \
 	&& rm -rf /var/lib/apt/lists/*
 
 #############################
