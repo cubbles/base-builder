@@ -1,15 +1,17 @@
 FROM docker.webblebase.net:444/base/abstract-node:0.3
 
-MAINTAINER Thomas Frank thomas.frank@incowia.com
+MAINTAINER Hd Böhlau hans-dieter.boehlau@incowia.com
 
 #############################
 # nginx
 # =====
 
-# Please modify if neccessary to use another version
-ENV NGINX_VERSION 1.9.6
+# Please modify if it's neccessary to use another version
+ENV NGINX_VERSION 1.9.7
 ENV NGINX_DEV_KIT 0.2.19
-ENV LUA_VERSION 5.1.5
+ENV VER_LUAJIT=2.0.4
+ENV LUAJIT_LIB /usr/local/lib
+ENV LUAJIT_INC /usr/local/include/luajit-2.0
 ENV NGINX_LUA_MODULE 0.9.17
 ENV nginxHome='/usr/local/nginx'
 ENV nginxConf='/etc/nginx/nginx.conf'
@@ -52,7 +54,7 @@ RUN set -x \
 # ngx_devel_kit {NDK} module
   && curl -SLO "https://github.com/simpl/ngx_devel_kit/archive/v${NGINX_DEV_KIT}.tar.gz" \
 # ngx_lua module
-  && curl -SLO "http://www.lua.org/ftp/lua-${LUA_VERSION}.tar.gz" \
+  && curl -SLO "http://luajit.org/download/LuaJIT-${VER_LUAJIT}.tar.gz" \
   && curl -SLO "https://github.com/openresty/lua-nginx-module/archive/v${NGINX_LUA_MODULE}.tar.gz"
 
 # verify the packages
@@ -67,25 +69,34 @@ ENV LUA_INC /usr/local/include
 RUN set -x \
   && tar xfz v${NGINX_DEV_KIT}.tar.gz -C /usr/local/src \
   && tar xfz v${NGINX_LUA_MODULE}.tar.gz -C /usr/local/src \
-  && tar xfz lua-${LUA_VERSION}.tar.gz -C /usr/local/src \
+  && tar xfz LuaJIT-${VER_LUAJIT}.tar.gz -C /usr/local/src \
   && tar xfz nginx-${NGINX_VERSION}.tar.gz -C /usr/local/src
 
-# configure and compile
+# compile and install LuaJIT
+WORKDIR /usr/local/src/LuaJIT-${VER_LUAJIT}
+RUN make
+RUN make install
+
+# configure and compile nginx
 RUN set -x \
-# lua (needed for lua module in nginx)
-  && cd /usr/local/src/lua-${LUA_VERSION} \
-  && make linux && make install INSTALL_TOP=/usr/local \
-# nginx
   && cd /usr/local/src/nginx-${NGINX_VERSION} \
   && ./configure \
         --prefix=${nginxHome} \
         --conf-path=${nginxConf} \
         --with-http_ssl_module \
         --with-http_v2_module \
-        --with-ld-opt="-Wl,-rpath,${LUA_LIB}" \
+        --with-ld-opt="-Wl,-rpath,${LUAJIT_LIB}" \
         --add-module=/usr/local/src/ngx_devel_kit-${NGINX_DEV_KIT} \
         --add-module=/usr/local/src/lua-nginx-module-${NGINX_LUA_MODULE} \
   && make -j2 && make install
+
+# load modules: lua-cjson
+ENV LUA_CJSON lua-cjson-2.1.0
+RUN curl -SLO "http://www.kyne.com.au/%7Emark/software/download/${LUA_CJSON}.tar.gz" && \
+    tar xzvf ${LUA_CJSON}.tar.gz && \
+    cd ${LUA_CJSON} && \
+    make LUA_INCLUDE_DIR=$LUAJIT_INC && \
+    make install
 
 # cleanup
 RUN set -x \
