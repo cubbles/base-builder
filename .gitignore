@@ -17,7 +17,8 @@ build
 
 # resources created during build
 etc/coredatastore/opt/coredatastore/setup-resources
-/etc/uploadauthentication/opt/uploadauthentication/setup-resources
+/etc/authentication/opt/authentication/setup-resources
+/etc/userprofilemanagement/opt/userprofilemanagement/setup-resources
 etc/webpackagesearch/opt/webpackagesearch/setup-resources
 etc/webpackagesearch/opt/webpackagesearch/app
 

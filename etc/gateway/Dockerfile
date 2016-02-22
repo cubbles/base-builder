@@ -9,16 +9,16 @@ MAINTAINER Hd Böhlau hans-dieter.boehlau@incowia.com
 # Please modify if it's neccessary to use another version
 ENV NGINX_VERSION 1.9.7
 ENV NGINX_DEV_KIT 0.2.19
-ENV VER_LUAJIT=2.0.4
+ENV VER_LUAJIT 2.0.4
 ENV LUAJIT_LIB /usr/local/lib
 ENV LUAJIT_INC /usr/local/include/luajit-2.0
-ENV NGINX_LUA_MODULE 0.9.17
-ENV nginxHome='/usr/local/nginx'
-ENV nginxConf='/etc/nginx/nginx.conf'
+ENV NGINX_LUA_MODULE 0.10.0
+ENV nginxHome /usr/local/nginx
+ENV nginxConf /etc/nginx/nginx.conf
 
 
 # Packages needed to actually build nginx
-    # build-essential (from parent image) = basic build tools, eg. 'gcc' and 'make'
+    # build-essential = basic build tools, eg. 'gcc' and 'make'
     # curl (from parent image) = tool to download the nginx tarball
     # ca-certificates (from parent image) = needed to download additional modules (shipped version is to old)
     # libpcre3-dev = library needed to build the rewrite module of nginx
@@ -106,6 +106,10 @@ RUN set -x \
   && rm -rf /var/lib/apt/lists/* \
   && rm -rf /usr/local/src/* \
   && rm -f /*.tar.gz
+
+# forward request logs to Docker log collector
+RUN ln -sf /dev/stdout /var/log/nginx-access.log
+RUN ln -sf /dev/stderr /var/log/nginx-error.log
 
 # provide entrypoint
 COPY ./docker-entrypoint.sh /entrypoint.sh

@@ -21,7 +21,8 @@ showEnvironment
 # define images
 COREDATASTORE="docker.webblebase.net:444/base/coredatastore"
 WEBPACKAGESEARCH="docker.webblebase.net:444/base/webpackagesearch"
-UPLOADAUTHENTICATION="docker.webblebase.net:444/base/uploadauthentication"
+AUTHENTICATION="docker.webblebase.net:444/base/authentication"
+USERPROFILEMANAGEMENT="docker.webblebase.net:444/base/userprofilemanagement"
 
 # "Do processing ..."
 cd $WORK_DIR # contains decking.json
@@ -42,8 +43,12 @@ case "$1" in
 				prepare_webpackagesearch $WORK_DIR
 			}
 			fi
-			if [[ "$2" == "$UPLOADAUTHENTICATION" || "$2" == all ]]; then {
-				prepare_uploadauthentication
+			if [[ "$2" == "$AUTHENTICATION" || "$2" == all ]]; then {
+				prepare_authentication
+			}
+			fi
+			if [[ "$2" == "$USERPROFILEMANAGEMENT" || "$2" == all ]]; then {
+				prepare_userprofilemanagement
 			}
 			fi
 			# tag param
@@ -73,6 +78,8 @@ case "$1" in
 				docker push "docker.webblebase.net:444/base/coredatastore":$4
 				docker push "docker.webblebase.net:444/base/coredatastore_volume":$4
 				docker push "docker.webblebase.net:444/base/serviceconfigvolume":$4
+				docker push "docker.webblebase.net:444/base/authentication":$4
+				docker push "docker.webblebase.net:444/base/userprofilemanagement":$4
 			}
 			else {
 				docker push $3:$4

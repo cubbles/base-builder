@@ -3,8 +3,8 @@ FROM docker.webblebase.net:444/base/abstract-node:0.3
 MAINTAINER Hans-Dieter Böhlau hans-dieter.boehlau@incowia.com
 
 # provide services
-COPY ./opt/uploadauthentication/setup-resources /opt/uploadauthentication
-RUN cd /opt/uploadauthentication/upload-authentication-service \
+COPY ./opt/userprofilemanagement/setup-resources /opt/userprofilemanagement
+RUN cd /opt/userprofilemanagement/base-userprofilemanagement-service \
  && npm install
 
 # provide entrypoint

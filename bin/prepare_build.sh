@@ -14,11 +14,13 @@ prepare_coredatastore(){
   sudo mkdir $RESOURCE_DIR_NAME && cd $RESOURCE_DIR_NAME
   echo "Accessing Git ..."
   sudo GIT_SSL_NO_VERIFY=true git clone https://base-builder:k5TR6J25wQDuT37anAqE@pmt.incowia.de/webble/r/client/utilities/couchapp_crc-utils.git
+  sudo GIT_SSL_NO_VERIFY=true git clone https://base-builder:k5TR6J25wQDuT37anAqE@pmt.incowia.de/webble/r/base/authentication/base-couchapps_authentication-utils.git
   sudo GIT_SSL_NO_VERIFY=true git clone https://base-builder:k5TR6J25wQDuT37anAqE@pmt.incowia.de/webble/r/base/coredatastore/couchapp_webpackage-validator.git
   sudo GIT_SSL_NO_VERIFY=true git clone https://base-builder:k5TR6J25wQDuT37anAqE@pmt.incowia.de/webble/r/base/webpackagesearch/couchapp-artifactsearch.git
   echo "Accessing Git ... done."
   cd couchapp_crc-utils && sudo GIT_SSL_NO_VERIFY=true git fetch && sudo git checkout 0.1 && sudo rm -rf .git && cd ..
-  cd couchapp_webpackage-validator && sudo GIT_SSL_NO_VERIFY=true git fetch && sudo git checkout v0.3.2 && sudo rm -rf .git && cd ..
+  cd base-couchapps_authentication-utils && sudo GIT_SSL_NO_VERIFY=true git fetch && sudo git checkout v0.1.0 && sudo rm -rf .git && cd ..
+  cd couchapp_webpackage-validator && sudo GIT_SSL_NO_VERIFY=true git fetch && sudo git checkout v0.4.0 && sudo rm -rf .git && cd ..
   cd couchapp-artifactsearch && sudo GIT_SSL_NO_VERIFY=true git fetch && sudo git checkout v0.4.0 && sudo rm -rf .git
 }
 
@@ -45,8 +47,8 @@ prepare_webpackagesearch(){
   echo "Accessing Git ... done."
 }
 
-prepare_uploadauthentication(){
-  cd uploadauthentication/opt/uploadauthentication
+prepare_authentication(){
+  cd authentication/opt/authentication
   if [ -d $RESOURCE_DIR_NAME ]; then {
     echo "Remove old setup-resources ..."
     sudo rm -r $RESOURCE_DIR_NAME
@@ -55,10 +57,26 @@ prepare_uploadauthentication(){
   fi
   sudo mkdir $RESOURCE_DIR_NAME && cd $RESOURCE_DIR_NAME
   echo "Accessing Git ..."
-  sudo GIT_SSL_NO_VERIFY=true git clone https://base-builder:k5TR6J25wQDuT37anAqE@pmt.incowia.de/webble/r/base/upload-authentication/upload-authentication-service.git
+  sudo GIT_SSL_NO_VERIFY=true git clone https://base-builder:k5TR6J25wQDuT37anAqE@pmt.incowia.de/webble/r/base/authentication/base-authentication-service.git
   echo "Accessing Git ... done."
-  cd upload-authentication-service && sudo GIT_SSL_NO_VERIFY=true git fetch && sudo git checkout && sudo rm -rf .git && cd ..
+  cd base-authentication-service && sudo GIT_SSL_NO_VERIFY=true git fetch && sudo git checkout v0.1.0 && sudo rm -rf .git && cd ..
 }
+
+prepare_userprofilemanagement(){
+  cd userprofilemanagement/opt/userprofilemanagement
+  if [ -d $RESOURCE_DIR_NAME ]; then {
+    echo "Remove old setup-resources ..."
+    sudo rm -r $RESOURCE_DIR_NAME
+    echo "Remove old setup-resources ... done."
+  }
+  fi
+  sudo mkdir $RESOURCE_DIR_NAME && cd $RESOURCE_DIR_NAME
+  echo "Accessing Git ..."
+  sudo GIT_SSL_NO_VERIFY=true git clone https://base-builder:k5TR6J25wQDuT37anAqE@pmt.incowia.de/webble/r/base/userprofilemanagement/base-userprofilemanagement-service.git
+  echo "Accessing Git ... done."
+  cd base-userprofilemanagement-service && sudo GIT_SSL_NO_VERIFY=true git fetch && sudo git checkout v0.2.0 && sudo rm -rf .git && cd ..
+}
+
 _cleanFolder () {
   if [ -d $1 ]; then {
     echo "Clean $1 ..."

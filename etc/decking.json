@@ -20,8 +20,12 @@
       "path": "./serviceconfigvolume",
       "context": "."
     },
-    "docker.webblebase.net:444/base/uploadauthentication": {
-      "path": "./uploadauthentication",
+    "docker.webblebase.net:444/base/authentication": {
+      "path": "./authentication",
+      "context": "."
+    },
+    "docker.webblebase.net:444/base/userprofilemanagement": {
+      "path": "./userprofilemanagement",
       "context": "."
     },
     "docker.webblebase.net:444/base/abstract-node": {

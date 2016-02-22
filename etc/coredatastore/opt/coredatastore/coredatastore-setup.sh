@@ -26,24 +26,58 @@ function isCouchUp {
 #
 function setup {
     COREDB="webpackage-store-core"
+    ACLDB="acls"
+    GROUPSDB="groups"
     # 0) delayed_commits
     local response0="$(curl -X PUT http://${HOST}/_config/couchdb/delayed_commits -d '"false"')"
-    # 1) create core database - ignore error, if it does already exist
-    local response1="$(curl -X PUT http://${HOST}/${COREDB})"
+
+    # 1) create databases
+    # 1.1) create core database - ignore error, if it does already exist
+    echo "create core database"
+    local response1_1="$(curl -X PUT http://${HOST}/${COREDB})"
+    echo $response1_1
+    # 1.2) create groups database - ignore error, if it does already exist
+    echo "create groups database"
+    local response1_2="$(curl -X PUT http://${HOST}/${GROUPSDB})"
+    echo $response1_2
+    # 1.3) create acls database - ignore error, if it does already exist
+    echo "create acls database"
+    local response1_3="$(curl -X PUT http://${HOST}/${ACLDB})"
+    echo $response1_3
+
     # 2) deploy couchapp_crc-utils; @deprecated as not longer used since modelVersion-8; upload to 'webpackage-store';
+    echo "deploy couchapp_crc-utils"
     cd /opt/coredatastore/setup-resources/couchapp_crc-utils
     local response2="$(grunt couchDeployLocal)"
-    # 3) deploy couchapp_webpackage-validator
+    echo $response2
+
+    # 3) deploy couchapp_users-authentication-utils
+    echo "deploy base-couchapps_authentication-utils"
+    cd /opt/coredatastore/setup-resources/base-couchapps_authentication-utils
+    local response3="$(grunt couchDeployLocal)"
+    echo $response3
+
+    # 4) deploy couchapp_webpackage-validator
+    echo "deploy couchapp_webpackage-validator"
     cd /opt/coredatastore/setup-resources/couchapp_webpackage-validator
-    local response3="$(grunt couchDeployLocal --db=${COREDB})"
-    # 4) deploy couchapp-artifactsearch
-    cd /opt/coredatastore/setup-resources/couchapp-artifactsearch
     local response4="$(grunt couchDeployLocal --db=${COREDB})"
+    echo $response4
+
+    # 5) deploy couchapp-artifactsearch
+    echo "deploy couchapp-artifactsearch"
+    cd /opt/coredatastore/setup-resources/couchapp-artifactsearch
+    local response5="$(grunt couchDeployLocal --db=${COREDB})"
+    echo $response5
+
+    # auth) enable proxy authentication to allow the authentication handled by the gateway
+    echo "config auth handlers"
+    local responseAuth="$(curl -H 'Content-Type: application/json' -X PUT http://${HOST}/_config/httpd/authentication_handlers -d '\"{couch_httpd_auth, cookie_authentication_handler}, {couch_httpd_auth, proxy_authentication_handler}, {couch_httpd_auth, default_authentication_handler}\"')"
+    echo $responseAuth
 
     # lastly) create admin
+    echo "setting admin account"
     local responseSecure="$(curl -X PUT http://${HOST}/_config/admins/admin -d '"admin"')"
-    # .. and return responses
-    echo -e "$response0\n$response1\n$response2\n$response3\n$response4\n$responseSecure"
+    echo $responseSecure
 }
 
 #############

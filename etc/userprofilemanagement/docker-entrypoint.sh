@@ -5,8 +5,8 @@ echo "$0 $@"
 # if command is 'nodemon' ...
 if [ "$1" == "nodemon" ]; then
     # start nodemon
-    cd /opt/uploadauthentication
-    nodemon $NODEMON_OPTIONS ./upload-authentication-service/bin/run.js
+    cd /opt/userprofilemanagement/base-userprofilemanagement-service
+    nodemon $NODEMON_OPTIONS --exec "npm start"
 fi
 
 # otherwise, execute the passed command
