@@ -1,0 +1,14 @@
+{
+  "name": "base-builder",
+  "version": "0.8.1",
+  "description": "A toolset to build containers for a Cubbles-Base.",
+  "repository": {
+    "type": "git",
+    "url": "https://hrbu@pmt.incowia.de/webble/r/base/base-builder.git"
+  },
+  "keywords": [
+    "cubbles"
+  ],
+  "author": "Hans-Dieter Boehlau",
+  "license": "Apache-2.0"
+}
