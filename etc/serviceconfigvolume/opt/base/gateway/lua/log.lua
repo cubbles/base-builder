@@ -1,1 +1,0 @@
-ngx.say(ngx.NOTICE, 'this is a say string from lua file')
