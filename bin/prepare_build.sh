@@ -74,7 +74,7 @@ prepare_userprofilemanagement(){
   echo "Accessing Git ..."
   sudo GIT_SSL_NO_VERIFY=true git clone https://base-builder:k5TR6J25wQDuT37anAqE@pmt.incowia.de/webble/r/base/userprofilemanagement/base-userprofilemanagement-service.git
   echo "Accessing Git ... done."
-  cd base-userprofilemanagement-service && sudo GIT_SSL_NO_VERIFY=true git fetch && sudo git checkout v0.2.0 && sudo rm -rf .git && cd ..
+  cd base-userprofilemanagement-service && sudo GIT_SSL_NO_VERIFY=true git fetch && sudo git checkout v0.2.1 && sudo rm -rf .git && cd ..
 }
 
 _cleanFolder () {
