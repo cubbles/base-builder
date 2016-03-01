@@ -25,59 +25,62 @@ function isCouchUp {
 #       This can be done manually (via couchdb ui) or by script (via the couchdb api).
 #
 function setup {
+    LOGIN="admin",
+    PASSWORD="admin",
+    BASICAUTH="${LOGIN}:${PASSWORD}"
     COREDB="webpackage-store-core"
     ACLDB="acls"
     GROUPSDB="groups"
+    # first) create admin
+    echo "create admin account (ignore error, if account already exists)"
+    local responseSecure="$(curl -X PUT http://${HOST}/_config/admins/${LOGIN} -d '"${SETUPPASSWORD}"')"
+    echo $responseSecure
+
     # 0) delayed_commits
-    local response0="$(curl -X PUT http://${HOST}/_config/couchdb/delayed_commits -d '"false"')"
+    local response0="$(curl -X PUT http://${BASICAUTH}@${HOST}/_config/couchdb/delayed_commits -d '"false"')"
 
     # 1) create databases
     # 1.1) create core database - ignore error, if it does already exist
     echo "create core database"
-    local response1_1="$(curl -X PUT http://${HOST}/${COREDB})"
+    local response1_1="$(curl -X PUT http://${BASICAUTH}@${HOST}/${COREDB})"
     echo $response1_1
     # 1.2) create groups database - ignore error, if it does already exist
     echo "create groups database"
-    local response1_2="$(curl -X PUT http://${HOST}/${GROUPSDB})"
+    local response1_2="$(curl -X PUT http://${BASICAUTH}@${HOST}/${GROUPSDB})"
     echo $response1_2
     # 1.3) create acls database - ignore error, if it does already exist
     echo "create acls database"
-    local response1_3="$(curl -X PUT http://${HOST}/${ACLDB})"
+    local response1_3="$(curl -X PUT http://${BASICAUTH}@${HOST}/${ACLDB})"
     echo $response1_3
 
     # 2) deploy couchapp_crc-utils; @deprecated as not longer used since modelVersion-8; upload to 'webpackage-store';
     echo "deploy couchapp_crc-utils"
     cd /opt/coredatastore/setup-resources/couchapp_crc-utils
-    local response2="$(grunt couchDeployLocal)"
+    local response2="$(grunt couchDeployLocal --adminLogin=${LOGIN} --adminPassword=${PASSWORD})"
     echo $response2
 
     # 3) deploy couchapp_users-authentication-utils
     echo "deploy base-couchapps_authentication-utils"
     cd /opt/coredatastore/setup-resources/base-couchapps_authentication-utils
-    local response3="$(grunt couchDeployLocal)"
+    local response3="$(grunt couchDeployLocal --adminLogin=${LOGIN} --adminPassword=${PASSWORD})"
     echo $response3
 
     # 4) deploy couchapp_webpackage-validator
     echo "deploy couchapp_webpackage-validator"
     cd /opt/coredatastore/setup-resources/couchapp_webpackage-validator
-    local response4="$(grunt couchDeployLocal --db=${COREDB})"
+    local response4="$(grunt couchDeployLocal --db=${COREDB} --adminLogin=${LOGIN} --adminPassword=${PASSWORD})"
     echo $response4
 
     # 5) deploy couchapp-artifactsearch
     echo "deploy couchapp-artifactsearch"
     cd /opt/coredatastore/setup-resources/couchapp-artifactsearch
-    local response5="$(grunt couchDeployLocal --db=${COREDB})"
+    local response5="$(grunt couchDeployLocal --db=${COREDB} --adminLogin=${LOGIN} --adminPassword=${PASSWORD})"
     echo $response5
 
     # auth) enable proxy authentication to allow the authentication handled by the gateway
     echo "config auth handlers"
-    local responseAuth="$(curl -H 'Content-Type: application/json' -X PUT http://${HOST}/_config/httpd/authentication_handlers -d '\"{couch_httpd_auth, cookie_authentication_handler}, {couch_httpd_auth, proxy_authentication_handler}, {couch_httpd_auth, default_authentication_handler}\"')"
+    local responseAuth="$(curl -H 'Content-Type: application/json' -X PUT http://${BASICAUTH}@${HOST}/_config/httpd/authentication_handlers -d '\"{couch_httpd_auth, cookie_authentication_handler}, {couch_httpd_auth, proxy_authentication_handler}, {couch_httpd_auth, default_authentication_handler}\"')"
     echo $responseAuth
-
-    # lastly) create admin
-    echo "setting admin account"
-    local responseSecure="$(curl -X PUT http://${HOST}/_config/admins/admin -d '"admin"')"
-    echo $responseSecure
 }
 
 #############
