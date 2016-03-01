@@ -66,6 +66,8 @@ COPY ./opt/coredatastore /opt/coredatastore
 RUN npm install -g grunt-cli@0.1.13
 RUN cd /opt/coredatastore/setup-resources/couchapp_crc-utils \
  && npm install
+RUN cd /opt/coredatastore/setup-resources/base-couchapps_authentication-utils \
+ && npm install
 RUN cd /opt/coredatastore/setup-resources/couchapp_webpackage-validator \
  && npm install
 RUN cd /opt/coredatastore/setup-resources/couchapp-artifactsearch \
