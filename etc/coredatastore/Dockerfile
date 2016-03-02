@@ -68,9 +68,9 @@ RUN cd /opt/coredatastore/setup-resources/couchapp_crc-utils \
  && npm install
 RUN cd /opt/coredatastore/setup-resources/base-couchapps_authentication-utils \
  && npm install
-RUN cd /opt/coredatastore/setup-resources/couchapp_webpackage-validator \
+RUN cd /opt/coredatastore/setup-resources/base-couchapp_webpackage-validator \
  && npm install
-RUN cd /opt/coredatastore/setup-resources/couchapp-artifactsearch \
+RUN cd /opt/coredatastore/setup-resources/base-couchapp-artifactsearch \
  && npm install
 
 
