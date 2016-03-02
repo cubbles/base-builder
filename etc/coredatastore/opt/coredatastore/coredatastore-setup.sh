@@ -67,15 +67,15 @@ function setup {
     local response3="$(grunt couchDeployLocal --adminLogin=${LOGIN} --adminPassword=${PASSWORD})"
     echo $response3
 
-    # 4) deploy couchapp_webpackage-validator
-    echo "deploy couchapp_webpackage-validator"
-    cd /opt/coredatastore/setup-resources/couchapp_webpackage-validator
+    # 4) deploy base-couchapp_webpackage-validator
+    echo "deploy base-couchapp_webpackage-validator"
+    cd /opt/coredatastore/setup-resources/base-couchapp_webpackage-validator
     local response4="$(grunt couchDeployLocal --db=${COREDB} --adminLogin=${LOGIN} --adminPassword=${PASSWORD})"
     echo $response4
 
-    # 5) deploy couchapp-artifactsearch
-    echo "deploy couchapp-artifactsearch"
-    cd /opt/coredatastore/setup-resources/couchapp-artifactsearch
+    # 5) deploy base-couchapp-artifactsearch
+    echo "deploy base-couchapp-artifactsearch"
+    cd /opt/coredatastore/setup-resources/base-couchapp-artifactsearch
     local response5="$(grunt couchDeployLocal --db=${COREDB} --adminLogin=${LOGIN} --adminPassword=${PASSWORD})"
     echo $response5
 }

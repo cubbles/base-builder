@@ -15,13 +15,13 @@ prepare_coredatastore(){
   echo "Accessing Git ..."
   sudo GIT_SSL_NO_VERIFY=true git clone https://base-builder:k5TR6J25wQDuT37anAqE@pmt.incowia.de/webble/r/client/utilities/couchapp_crc-utils.git
   sudo GIT_SSL_NO_VERIFY=true git clone https://base-builder:k5TR6J25wQDuT37anAqE@pmt.incowia.de/webble/r/base/authentication/base-couchapps_authentication-utils.git
-  sudo GIT_SSL_NO_VERIFY=true git clone https://base-builder:k5TR6J25wQDuT37anAqE@pmt.incowia.de/webble/r/base/coredatastore/couchapp_webpackage-validator.git
-  sudo GIT_SSL_NO_VERIFY=true git clone https://base-builder:k5TR6J25wQDuT37anAqE@pmt.incowia.de/webble/r/base/webpackagesearch/couchapp-artifactsearch.git
+  sudo GIT_SSL_NO_VERIFY=true git clone https://base-builder:k5TR6J25wQDuT37anAqE@pmt.incowia.de/webble/r/base/coredatastore/base-couchapp_webpackage-validator.git
+  sudo GIT_SSL_NO_VERIFY=true git clone https://base-builder:k5TR6J25wQDuT37anAqE@pmt.incowia.de/webble/r/base/webpackagesearch/base-couchapp-artifactsearch.git
   echo "Accessing Git ... done."
   cd couchapp_crc-utils && sudo GIT_SSL_NO_VERIFY=true git fetch && sudo git checkout 0.1 && sudo rm -rf .git && cd ..
   cd base-couchapps_authentication-utils && sudo GIT_SSL_NO_VERIFY=true git fetch && sudo git checkout v0.2.0 && sudo rm -rf .git && cd ..
-  cd couchapp_webpackage-validator && sudo GIT_SSL_NO_VERIFY=true git fetch && sudo git checkout v0.5.0 && sudo rm -rf .git && cd ..
-  cd couchapp-artifactsearch && sudo GIT_SSL_NO_VERIFY=true git fetch && sudo git checkout v0.4.0 && sudo rm -rf .git
+  cd base-couchapp_webpackage-validator && sudo GIT_SSL_NO_VERIFY=true git fetch && sudo git checkout v0.5.0 && sudo rm -rf .git && cd ..
+  cd base-couchapp-artifactsearch && sudo GIT_SSL_NO_VERIFY=true git fetch && sudo git checkout v0.5.0 && sudo rm -rf .git
 }
 
 prepare_webpackagesearch(){
