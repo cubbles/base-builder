@@ -27,18 +27,16 @@ function isCouchUp {
 function setup {
     # BASE_AUTH_DATASTORE_ADMINCREDENTIALS will is an env-variable set via docker
     LOGIN="$(echo $BASE_AUTH_DATASTORE_ADMINCREDENTIALS | cut -d":" -f1)"
-    PASSWORD="$(echo $BASE_AUTH_DATASTORE_ADMINCREDENTIALS | cut -d":" -f2)",
+    PASSWORD="$(echo $BASE_AUTH_DATASTORE_ADMINCREDENTIALS | cut -d":" -f2)"
     BASICAUTH="${LOGIN}:${PASSWORD}"
     COREDB="webpackage-store-core"
     ACLDB="acls"
     GROUPSDB="groups"
-    # first) create admin
-    echo "create admin account (ignore error, if account already exists)"
-    local responseSecure="$(curl -X PUT http://${HOST}/_config/admins/${LOGIN} -d '"${SETUPPASSWORD}"')"
-    echo $responseSecure
 
-    # 0) delayed_commits
-    local response0="$(curl -X PUT http://${BASICAUTH}@${HOST}/_config/couchdb/delayed_commits -d '"false"')"
+    # 0) create admin
+    echo "create admin account (ignore error, if account already exists )"
+    local responseSecure="$(curl -X PUT http://${HOST}/_config/admins/${LOGIN} -d '"'"${PASSWORD}"'"')"
+    echo $responseSecure
 
     # 1) create databases
     # 1.1) create core database - ignore error, if it does already exist
