@@ -25,8 +25,9 @@ function isCouchUp {
 #       This can be done manually (via couchdb ui) or by script (via the couchdb api).
 #
 function setup {
-    LOGIN="admin",
-    PASSWORD="admin",
+    # BASE_AUTH_DATASTORE_ADMINCREDENTIALS will is an env-variable set via docker
+    LOGIN="$(echo $BASE_AUTH_DATASTORE_ADMINCREDENTIALS | cut -d":" -f1)"
+    PASSWORD="$(echo $BASE_AUTH_DATASTORE_ADMINCREDENTIALS | cut -d":" -f2)",
     BASICAUTH="${LOGIN}:${PASSWORD}"
     COREDB="webpackage-store-core"
     ACLDB="acls"
@@ -53,7 +54,8 @@ function setup {
     local response1_3="$(curl -X PUT http://${BASICAUTH}@${HOST}/${ACLDB})"
     echo $response1_3
 
-    # 2) deploy couchapp_crc-utils; @deprecated as not longer used since modelVersion-8; upload to 'webpackage-store';
+    # 2) deploy couchapp_crc-utils;
+    # !!! @deprecated as not longer used since modelVersion-8; upload to 'webpackage-store';
     echo "deploy couchapp_crc-utils"
     cd /opt/coredatastore/setup-resources/couchapp_crc-utils
     local response2="$(grunt couchDeployLocal --adminLogin=${LOGIN} --adminPassword=${PASSWORD})"
@@ -76,11 +78,6 @@ function setup {
     cd /opt/coredatastore/setup-resources/couchapp-artifactsearch
     local response5="$(grunt couchDeployLocal --db=${COREDB} --adminLogin=${LOGIN} --adminPassword=${PASSWORD})"
     echo $response5
-
-    # auth) enable proxy authentication to allow the authentication handled by the gateway
-    echo "config auth handlers"
-    local responseAuth="$(curl -H 'Content-Type: application/json' -X PUT http://${BASICAUTH}@${HOST}/_config/httpd/authentication_handlers -d '\"{couch_httpd_auth, cookie_authentication_handler}, {couch_httpd_auth, proxy_authentication_handler}, {couch_httpd_auth, default_authentication_handler}\"')"
-    echo $responseAuth
 }
 
 #############
