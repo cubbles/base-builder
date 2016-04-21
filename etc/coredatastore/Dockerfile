@@ -35,12 +35,12 @@ RUN groupadd -r couchdb && useradd -d /var/lib/couchdb -g couchdb couchdb
 ENV COUCHDB_VERSION 1.6.1
 
 # download dependencies, compile and install couchdb
+# considers "https://github.com/klaemo/docker-couchdb/issues/35"
 RUN apt-get update -y \
   && apt-get install -y --no-install-recommends \
     build-essential ca-certificates curl \
     libmozjs185-dev libmozjs185-1.0 libnspr4 libnspr4-0d libnspr4-dev libcurl4-openssl-dev libicu-dev \
-  && curl -ssL https://packages.erlang-solutions.com/erlang-solutions_1.0_all.deb -o esl.deb && dpkg -i esl.deb && apt-get update \
-  && apt-get install -y --no-install-recommends erlang-nox=1:17.4 erlang-dev=1:17.4 \
+    erlang-nox erlang-dev \
   && curl -sSL http://apache.openmirror.de/couchdb/source/$COUCHDB_VERSION/apache-couchdb-$COUCHDB_VERSION.tar.gz -o couchdb.tar.gz \
   && curl -sSL https://www.apache.org/dist/couchdb/source/$COUCHDB_VERSION/apache-couchdb-$COUCHDB_VERSION.tar.gz.asc -o couchdb.tar.gz.asc \
   && curl -sSL https://www.apache.org/dist/couchdb/KEYS -o KEYS \
