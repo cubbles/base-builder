@@ -16,9 +16,11 @@ pids
 build
 
 # resources created during build
-etc/coredatastore/opt/coredatastore/setup-resources
-/etc/authentication/opt/authentication/setup-resources
-/etc/userprofilemanagement/opt/userprofilemanagement/setup-resources
-etc/webpackagesearch/opt/webpackagesearch/setup-resources
-etc/webpackagesearch/opt/webpackagesearch/app
+etc/build/base.coredatastore/opt/coredatastore/setup-resources
+/etc/build/base.authentication/opt/authentication/setup-resources
+/etc/build/base.userprofilemanagement/opt/userprofilemanagement/setup-resources
+etc/build/base.webpackagesearch/opt/webpackagesearch/setup-resources
+etc/build/base.webpackagesearch/opt/webpackagesearch/app
 
+/opt/builder-cli/node_modules/
+/etc/build/base/resources/opt/base/opt/base-cli/node_modules/

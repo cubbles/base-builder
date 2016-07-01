@@ -3,12 +3,16 @@ Zweck: Tool für das Bauen von Docker-Images
 
 ## Commandline-Usage
 
+1. Via ssh in die docker-vm verbinden.
+2. Lokales Entwicklerverzeichnis mounten.
+3. In das Root-Verzeichnis dieses Projekts wechseln.
+
 ### List Options
     $ ./bin/run.sh
 
 ### Build and tag images
-    # $ ./bin/run.sh build <image name | all> <tag>
-    $ $ ./bin/run.sh build docker.webblebase:4444.net/base/gateway 1.0
+    # $ ./bin/run.sh build <image name> <tag>
+    $ $ ./bin/run.sh build cubbles/base.gateway 1.0
     [...]
 
 
