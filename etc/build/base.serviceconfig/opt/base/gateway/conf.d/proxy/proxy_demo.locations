@@ -1,0 +1,48 @@
+    ######
+    # This file is used to configure proxy-locations for external services.
+    # Doing so you can e.g.
+    # * configure credentials to access secured external services
+    # * provide additional response headers (Acess-Control)
+    # * control access to external service
+    #
+    # Please take care
+    # * to not get in conflict with configurations in '../base.conf'
+    # * to name additional files following the pattern 'proxy_(*).location'
+
+
+    ####
+    # Wikipedia Search API
+    # example:
+    #  http://cubbles-base-dev/_proxy/de.wikipedia.org/w/api.php?action=query&format=json&&list=search&srsearch=Albert%20Einstein
+    location /_proxy/de.wikipedia.org/w/api.php {
+        # for development
+        #access_log  /var/log/nginx-access.log upstreamlog;
+
+        # cors related config
+        add_header Access-Control-Allow-Headers "X-Requested-With";
+        add_header Access-Control-Allow-Methods "GET, HEAD, OPTIONS";
+        add_header Access-Control-Allow-Origin "*";
+
+        #rewrite ^/_proxy/de.wikipedia.org(.*)$ /w/api.php$1 break;
+        # proxy target
+        proxy_pass https://de.wikipedia.org/w/api.php;
+
+        proxy_redirect off;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    }
+
+    ##############
+    # proxy to couchdb
+#    location ~ ^/_proxy/demo-couchdb/? {
+
+        #rewrite ^/(.*)$ /webpackage-store-$1 break;
+        #proxy_pass http://coredatastore:5984;
+
+#        rewrite ^/_proxy/demo-couchdb(.*)$ $1 break;
+#        proxy_pass https://dockerhost:5985;
+
+#        proxy_redirect off;
+#        proxy_set_header Host $host;
+#        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+#    }
+

@@ -1,0 +1,51 @@
+version: '2'
+###
+services:
+  #_____________________________________________________
+  #
+  base:
+    build:
+      context: ./base
+    image: cubbles/base
+  #_____________________________________________________
+  #
+  base.abstract-node:
+    build:
+      context: ./base.abstract-node
+    image: cubbles/base.abstract-node
+  #_____________________________________________________
+  #
+  base.gateway:
+    build:
+      context: ./base.gateway
+    image: cubbles/base.gateway
+  #_____________________________________________________
+  #
+  base.authentication:
+    build:
+      context: ./base.authentication
+    image: cubbles/base.authentication
+  #_____________________________________________________
+  #
+  base.userprofilemanagement:
+    build:
+      context: ./base.userprofilemanagement
+    image: cubbles/base.userprofilemanagement
+  #_____________________________________________________
+  #
+  base.webpackagesearch:
+    build:
+      context: ./base.webpackagesearch
+    image: cubbles/base.webpackagesearch
+  #_____________________________________________________
+  # serviceconfig: central configuration
+  base.serviceconfig:
+    build:
+      context: ./base.serviceconfig
+    image: cubbles/base.serviceconfig
+  #_____________________________________________________
+  #
+  base.coredatastore:
+    build:
+      context: ./base.coredatastore
+    image: cubbles/base.coredatastore

@@ -4,7 +4,7 @@ APP_DIR_NAME=app
 
 # --------- functions ---------
 prepare_coredatastore(){
-  cd coredatastore/opt/coredatastore
+  cd base.coredatastore/opt/coredatastore
   if [ -d $RESOURCE_DIR_NAME ]; then {
     echo "Remove old setup-resources ..."
     sudo rm -r $RESOURCE_DIR_NAME
@@ -25,7 +25,7 @@ prepare_coredatastore(){
 }
 
 prepare_webpackagesearch(){
-  SERVICE_WORK_DIR=$1/webpackagesearch/opt/webpackagesearch
+  SERVICE_WORK_DIR=$1/base.webpackagesearch/opt/webpackagesearch
 
   # webpackagesearch
   cd $SERVICE_WORK_DIR
@@ -48,7 +48,7 @@ prepare_webpackagesearch(){
 }
 
 prepare_authentication(){
-  cd authentication/opt/authentication
+  cd base.authentication/opt/authentication
   if [ -d $RESOURCE_DIR_NAME ]; then {
     echo "Remove old setup-resources ..."
     sudo rm -r $RESOURCE_DIR_NAME
@@ -63,7 +63,7 @@ prepare_authentication(){
 }
 
 prepare_userprofilemanagement(){
-  cd userprofilemanagement/opt/userprofilemanagement
+  cd base.userprofilemanagement/opt/userprofilemanagement
   if [ -d $RESOURCE_DIR_NAME ]; then {
     echo "Remove old setup-resources ..."
     sudo rm -r $RESOURCE_DIR_NAME

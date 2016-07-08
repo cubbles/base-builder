@@ -1,0 +1,50 @@
+version: '2'
+###
+services:
+  #_____________________________________________________
+  #
+  base.gateway:
+    environment:
+      - NODEMON_OPTIONS=-L -e conf,locations,ssl --watch /opt/base/gateway
+    ports:
+      - 80:80
+      - 443:443
+  #_____________________________________________________
+  #
+  base.authentication:
+    environment:
+      - NODEMON_OPTIONS=-L --watch /opt/authentication/base-authentication-service/authentication-service.js --watch /opt/authentication/base-authentication-service/lib
+  #_____________________________________________________
+  #
+  base.userprofilemanagement:
+    environment:
+      - NODEMON_OPTIONS=-L --watch /opt/userprofilemanagement/base-userprofilemanagement-service/service.js --watch /opt/userprofilemanagement/base-userprofilemanagement-service/lib
+  #_____________________________________________________
+  #
+  base.webpackagesearch:
+
+  #_____________________________________________________
+  #
+  base.serviceconfig:
+    volumes:
+      - /mnt/sda1/projects.webbles/git/base/base-builder/etc/build/base.serviceconfig/opt/base/gateway:/opt/base/gateway:rw
+      #- /mnt/sda1/projects.webbles/git/base/base/etc/cert:/opt/base/gateway/conf.d/cert:rw
+
+  #_____________________________________________________
+  #
+  base.coredatastore:
+    ports:
+      - "5984:5984"
+    volumes:
+      - /mnt/sda1/projects.webbles/git/base/base-builder/var:/backups:rw
+
+#========================================================
+# volumes
+# volumes:
+
+#
+#========================================================
+## networks
+#networks:
+#  devbase:
+#    external: false

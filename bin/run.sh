@@ -24,12 +24,12 @@ AUTHENTICATION="base.authentication"
 USERPROFILEMANAGEMENT="base.userprofilemanagement"
 
 # "Do processing ..."
-cd $WORK_DIR # contains decking.json
+cd $WORK_DIR
 case "$1" in
 	builder-cli)
-		if [ ! $# -eq 4 ]; then {
+		if [ ! $# -eq 3 ]; then {
 			echo "Purpose: Build images"
-			echo "Usage: builder-cli build [image] [tag]"
+			echo "Usage: builder-cli build <image> [tag]"
 			exit 1
 		}
 		else {
@@ -54,7 +54,7 @@ case "$1" in
 			# start building
 			echo "building image $3:$4"
 			cd $WORK_DIR
-			sudo node $BUILDER_CLI_DIR/builder-cli $@
+			sudo node $BUILDER_CLI_DIR/builder-cli $@ --tag $4
 		}
 		fi
 		;;
@@ -62,7 +62,7 @@ case "$1" in
 	push)
 		if [ ! $# -eq 3 ]; then {
 			echo "Purpose: Push images into the docker registry"
-			echo "Usage: push [image] [tag]"
+			echo "Usage: push <image> <tag>"
 			exit 1
 		}
 		else {

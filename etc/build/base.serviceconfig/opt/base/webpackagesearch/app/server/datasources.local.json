@@ -1,0 +1,22 @@
+{
+  "CouchWebpackagesearch": {
+    "name": "CouchWebpackagesearch",
+    "connector": "couch",
+    "db": "webpackage-store",
+    "host": "coredatastore",
+    "port": 5984,
+    "protocol": "http",
+    "auth": {
+      "admin": {
+        "username": "admin",
+        "password": "admin"
+      }
+    },
+    "views": [
+      {
+        "ddoc": "couchapp-webpackagesearch",
+        "name": "viewWebpackages"
+      }
+    ]
+  }
+}

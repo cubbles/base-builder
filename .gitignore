@@ -1,26 +1,20 @@
+# webstorm project file
+.idea
+
 # Logs
 logs
 *.log
 
-# Runtime data
-pids
-*.pid
-
-# Grunt intermediate storage (http://gruntjs.com/creating-plugins#storing-task-files)
-.grunt
-
-# webstorm project file
-.idea
-
-# build folder
-build
+# all node_modules folders
+node_modules
 
 # resources created during build
-etc/build/base.coredatastore/opt/coredatastore/setup-resources
+/etc/build/base.coredatastore/opt/coredatastore/setup-resources
 /etc/build/base.authentication/opt/authentication/setup-resources
 /etc/build/base.userprofilemanagement/opt/userprofilemanagement/setup-resources
-etc/build/base.webpackagesearch/opt/webpackagesearch/setup-resources
-etc/build/base.webpackagesearch/opt/webpackagesearch/app
+/etc/build/base.webpackagesearch/opt/webpackagesearch/setup-resources
+/etc/build/base.webpackagesearch/opt/webpackagesearch/app
 
-/opt/builder-cli/node_modules/
-/etc/build/base/resources/opt/base/opt/base-cli/node_modules/
+# all .tar* files
+*.tar*
+
