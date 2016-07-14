@@ -28,8 +28,6 @@ services:
   base.coredatastore:
     ports:
       - "5984:5984"
-    volumes:
-      - /var:/backups:rw
 
 #========================================================
 # volumes

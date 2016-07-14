@@ -35,9 +35,6 @@ services:
   base.coredatastore:
     ports:
       - "5984:5984"
-    volumes:
-      - /mnt/sda1/projects.webbles/git/base/base-builder/var:/backups:rw
-
 #========================================================
 # volumes
 # volumes:
