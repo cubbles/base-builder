@@ -6,6 +6,7 @@ var path = require('path');
 var vorpal = require('vorpal')();
 
 //load commands
+require('./lib/setup/pull.js')(vorpal);
 require('./lib/runtime-controller/up.js')(vorpal);
 require('./lib/runtime-controller/down.js')(vorpal);
 require('./lib/runtime-controller/restart.js')(vorpal);
