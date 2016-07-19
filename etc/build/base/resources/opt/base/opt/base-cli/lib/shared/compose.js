@@ -39,7 +39,7 @@ function getCommand (composeOptions, cluster, command, commandArgs) {
 
   var commandString = '';
   commandString += (composeOptions ? ' ' + composeOptions : '');
-  commandString += (cluster ? ' --project-name ' + cluster : '');
+  commandString += (cluster ? ' --project-name cubbles-base.' + cluster : '');
   commandString += ((global.command.args.options.verbose && ( composeOptions === undefined || composeOptions.indexOf('--verbose') < 0)) ? ' --verbose' : '');
   commandString += ' ' + command;
   commandString += (commandArgs ? ' ' + commandArgs : '');
