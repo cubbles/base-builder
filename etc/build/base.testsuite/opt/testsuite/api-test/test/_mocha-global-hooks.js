@@ -68,7 +68,7 @@ function addDb (done) {
 }
 
 function replicateFromCore (done) {
-  console.log('#######', opts.couchUrl);
+  // console.log('#######', opts.couchUrl);
   request.post(opts.couchUrl + '/_replicate')
     .set('Content-Type', 'application/json')
     .set('Accept', 'application/json')

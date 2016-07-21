@@ -12,13 +12,12 @@ var opts = require('../lib/opts.js');
  * expects to have a boot2docker-instance running
  */
 
-describe(
-    '#search-api-rootlevel: /' + ' (baseUrl=' + opts.baseUrl + ')',
+describe('#search-api-storelevel',
     function() {
-        var apiPath = '_api/webpackgesearch';
+        var apiPath = '_design/couchapp-artifactsearch/_list/listArtifacts/viewArtifacts';
         it('get on ' + apiPath + ' should return 200', function(done) {
-            var url = urljoin(opts.baseUploadUrl, apiPath);
-            console.log('    Requesting url: ', url);
+            var url = urljoin(opts.baseUrl, 'core', apiPath);
+            // console.log('    Requesting url: ', url);
             request
                 .get(url)
                 .end(function(err, res) {

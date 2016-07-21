@@ -15,6 +15,12 @@ services:
     image: cubbles/base.abstract-node
   #_____________________________________________________
   #
+  base.testsuite:
+    build:
+      context: ./base.testsuite
+    image: cubbles/base.testsuite
+  #_____________________________________________________
+  #
   base.gateway:
     build:
       context: ./base.gateway

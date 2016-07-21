@@ -8,42 +8,31 @@ var request = require('superagent');
 var supercouch = require('supercouch');
 var opts = require('../lib/opts.js');
 
-/**
- * expects to have a boot2docker-instance running
- */
-
-describe(
-    '#upload-api-rootlevel: /' + ' (baseUrl=' + opts.baseUrl + ')',
+describe('#upload-api-storelevel',
     function() {
         var uploadApiPath = '_api/upload';
         it('get on ' + uploadApiPath + ' should return 200', function(done) {
-            var url = urljoin(opts.baseUploadUrl, uploadApiPath);
+            var url = urljoin(opts.baseUrl, opts.storeName, '/');
             request
                 .get(url)
                 .end(function(err, res) {
-                    if (err) {
-                        done(err);
-                        return;
-                    }
                     assert.equal(res.statusCode, 200);
                     done();
                 });
         });
 
-        it('should PUT new document "pack-upload-put-[random]@1.0.0"', function(done) {
+        it('should PUT "pack-upload-put@1.0.0" should return 401 - Unauthorized', function(done) {
             var docId = 'pack-upload-put-' + Math.floor(Math.random() * 1000000) + '@1.0.0';
             var doc = {foo: 'bar'};
-            var url = urljoin(opts.baseUploadUrl, uploadApiPath, docId);
-            console.log('    Creating document: ', url);
+            var url = urljoin(opts.baseUploadUrl, opts.storeName, uploadApiPath, docId);
             request
                 .put(url)
                 .send(doc)
                 .end(function(err, res) {
                     if (err) {
-                        console.log('    failed', err);
-                        return done(err);
+                        return done();
                     }
-                    done();
+                    done(new Error('Expected a 401 Response.'));
                 });
         });
     }

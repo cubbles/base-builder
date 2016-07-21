@@ -14,12 +14,6 @@ if [ "$1" == "/bin/bash" ]; then
     exit 0
 fi
 
-# if command is ...
-if [ "$1" == "api-test" ]; then
-    exec "$@"
-    exit 0
-fi
-
 # otherwise execute the passed command
 # @see https://docs.docker.com/articles/dockerfile_best-practices/
 cd "/opt/base/opt/base-cli"

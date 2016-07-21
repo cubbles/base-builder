@@ -5,25 +5,13 @@
 var path = require('path');
 var vorpal = require('vorpal')();
 
-/*
-  load commands
- */
-require('./lib/setup/pull.js')(vorpal);
-require('./lib/test/api-test.js')(vorpal);
-require('./lib/runtime-controller/up.js')(vorpal);
-require('./lib/runtime-controller/down.js')(vorpal);
-require('./lib/runtime-controller/restart.js')(vorpal);
-require('./lib/runtime-controller/ps.js')(vorpal);
-require('./lib/runtime-controller/logs.js')(vorpal);
-require('./lib/replication-manager/replication-init.js')(vorpal);
-require('./lib/backup+restore/backup.js')(vorpal);
-require('./lib/backup+restore/restore.js')(vorpal);
+//load commands
+require('./api-test/api-test.js')(vorpal);
 
 var args = cleanArgs(__filename, JSON.parse(JSON.stringify(process.argv)));
 if (process.argv.indexOf('-i') > -1) {
   vorpal
-    .delimiter('base-cli$')
-    //.log('\n# Welcome to the \'base-cli\'. Type \'help\' for more ..')
+    .delimiter('base.test-cli$')
     .show()
     .parse(args)
 } else {

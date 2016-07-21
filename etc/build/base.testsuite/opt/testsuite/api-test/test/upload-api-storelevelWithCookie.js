@@ -8,12 +8,7 @@ var opts = require('../lib/opts.js');
 var request = require('superagent');
 var jwt = require('jsonwebtoken')
 
-/**
- * expects to have a boot2docker-instance running
- */
-
-describe(
-  '#upload-api-storelevelWithCookie: /' + opts.storeName + ' (baseUrl=' + opts.baseUploadWithCookieUrl + ')',
+describe('#upload-api-storelevelWithCookie',
   function () {
     var uploadApiPath = '_api/upload';
 

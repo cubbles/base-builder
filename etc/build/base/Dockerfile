@@ -33,13 +33,6 @@ RUN apt-get update -q \
 #CMD ["--version"]
 
 #################
-# api-test
-#################
-COPY ./resources/opt/base/opt/api-test /opt/base/opt/api-test
-RUN cd /opt/base/opt/api-test \
- && npm install
-
-#################
 # base-cli
 #################
 COPY ./resources/opt/base/opt/base-cli /opt/base/opt/base-cli

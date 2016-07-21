@@ -3,6 +3,11 @@ version: '2'
 services:
   #_____________________________________________________
   #
+  base.testsuite:
+    volumes:
+      - /mnt/sda1/projects.webbles/git/base/base-builder/etc/build/base.testsuite/opt/testsuite:/opt/testsuite/:ro
+  #_____________________________________________________
+  #
   base.gateway:
     environment:
       - NODEMON_OPTIONS=-L -e conf,locations,ssl --watch /opt/base/gateway
@@ -14,6 +19,8 @@ services:
   base.authentication:
     environment:
       - NODEMON_OPTIONS=-L --watch /opt/authentication/base-authentication-service/authentication-service.js --watch /opt/authentication/base-authentication-service/lib
+    volumes:
+      - /mnt/sda1/projects.webbles/git/base/authentication/base-authentication-service:/opt/authentication/base-authentication-service:ro
   #_____________________________________________________
   #
   base.userprofilemanagement:

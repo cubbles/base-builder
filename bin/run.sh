@@ -27,7 +27,7 @@ USERPROFILEMANAGEMENT="base.userprofilemanagement"
 cd $WORK_DIR
 case "$1" in
 	builder-cli)
-		if [ ! $# -eq 3 ]; then {
+		if [ ! $# -eq 3 ] && [ ! $# -eq 4 ]; then {
 			echo "Purpose: Build images"
 			echo "Usage: builder-cli build <image> [tag]"
 			exit 1

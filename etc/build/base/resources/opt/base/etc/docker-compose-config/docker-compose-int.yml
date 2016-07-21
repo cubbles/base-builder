@@ -3,6 +3,10 @@ version: '2'
 services:
   #_____________________________________________________
   #
+  base.testsuite:
+
+  #_____________________________________________________
+  #
   base.gateway:
     environment:
       - SSL_CERT=/opt/base/gateway/conf.d/cert/www.cubbles.world.ssl.crt

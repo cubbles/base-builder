@@ -9,15 +9,11 @@ var opts = require('../lib/opts.js');
 var supercouch = require('supercouch');
 var couch = supercouch(opts.couchUrl);
 
-/**
- * expects to have a boot2docker-instance running
- */
-
-describe(
-    '#download-api-storelevel: /' + opts.storeName + ' (baseUrl=' + opts.baseUrl + ')',
+describe('#replicate-api-storelevel',
     function() {
+        var apiPath = '_api/replicate';
         it('should return 200', function(done) {
-            var url = urljoin(opts.baseUrl, opts.storeName);
+            var url = urljoin(opts.baseReplicateUrl, opts.storeName, apiPath);
             request
                 .get(url)
                 .end(function(err, res) {
@@ -27,10 +23,9 @@ describe(
                 });
         });
 
-
         it('should receive "pack@1.0.0"', function(done) {
             var docId = 'pack@1.0.0';
-            var url = urljoin(opts.baseUrl, opts.storeName, docId);
+            var url = urljoin(opts.baseReplicateUrl, opts.storeName, apiPath, docId);
             console.log('    Requesting', url);
             request
                 .get(url)
