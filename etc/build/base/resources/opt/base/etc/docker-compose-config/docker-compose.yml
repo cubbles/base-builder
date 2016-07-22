@@ -27,6 +27,8 @@ services:
       - "base.userprofilemanagement:userprofilemanagement"
       - "base.webpackagesearch:webpackagesearch"
       - "base.coredatastore:coredatastore"
+    networks:
+      - base.gateway
     volumes_from:
       - base.serviceconfig:rw
   #_____________________________________________________
@@ -83,4 +85,5 @@ volumes:
 
 #
 #========================================================
-# networks
+networks:
+  base.gateway:
