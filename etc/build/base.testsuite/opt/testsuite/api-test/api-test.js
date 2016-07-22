@@ -46,8 +46,9 @@ module.exports = function (vorpal) {
       })
     })
       .on('start', function () {
-        console.log('Starting ...');
-        done()
+        resultLog += '\n\n' + '================';
+        resultLog += '\n' + 'Test result:';
+        resultLog += '\n' + '================';
       })
       .on('suite', function (suite) {
         resultLog += '\n\n' + '>>> ';
