@@ -28,6 +28,7 @@ services:
       - "base.webpackagesearch:webpackagesearch"
       - "base.coredatastore:coredatastore"
     networks:
+      - default
       - base.gateway
     volumes_from:
       - base.serviceconfig:rw
