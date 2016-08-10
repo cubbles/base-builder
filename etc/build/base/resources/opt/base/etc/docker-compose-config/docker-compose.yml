@@ -3,16 +3,6 @@ version: '2'
 services:
   #_____________________________________________________
   #
-  base.testsuite:
-    image: cubbles/base.testsuite:1.0
-    links:
-      - "base.gateway:gateway"
-      - "base.authentication:authentication"
-      - "base.userprofilemanagement:userprofilemanagement"
-      - "base.webpackagesearch:webpackagesearch"
-      - "base.coredatastore:coredatastore"
-  #_____________________________________________________
-  #
   base.gateway:
     image: cubbles/base.gateway:1.0
     environment:

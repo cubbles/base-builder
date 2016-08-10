@@ -211,10 +211,9 @@
         rewrite ^/([a-z0-9-]+)/_api/replicate(/.*)$ /webpackage-store-$1$2 break;
         proxy_pass http://coredatastore:5984;
 
-        # base64 encoded credentials (used https://www.base64encode.org/)
-        proxy_set_header Authorization "Basic YWRtaW46YWRtaW4=";
         proxy_redirect off;
         proxy_buffering off;
+        proxy_set_header Authorization ''; # prevent nginx from forwarding received autorization values
         proxy_set_header Host $host;
         proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
     }

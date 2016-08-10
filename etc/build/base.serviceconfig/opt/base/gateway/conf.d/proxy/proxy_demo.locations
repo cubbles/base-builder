@@ -14,17 +14,18 @@
     # example:
     #  http://cubbles-base-dev/_proxy/de.wikipedia.org/w/api.php?action=query&format=json&&list=search&srsearch=Albert%20Einstein
     location /_proxy/de.wikipedia.org/w/api.php {
-        # for development
-        #access_log  /var/log/nginx-access.log upstreamlog;
 
         # cors related config
         add_header Access-Control-Allow-Headers "X-Requested-With";
         add_header Access-Control-Allow-Methods "GET, HEAD, OPTIONS";
         add_header Access-Control-Allow-Origin "*";
 
-        #rewrite ^/_proxy/de.wikipedia.org(.*)$ /w/api.php$1 break;
-        # proxy target
-        proxy_pass https://de.wikipedia.org/w/api.php;
+        # define the upstream as a variable
+        # use the docker embedded DNS server at 127.0.0.11
+        # this will allow nginx to start/run also if the upstream-server is not available
+        resolver 127.0.0.11 valid=30s;
+        set $upstream_wikipedia de.wikipedia.org/w/api.php;
+        proxy_pass http://$upstream_wikipedia;
 
         proxy_redirect off;
         proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
@@ -34,6 +35,12 @@
     ##############
     # proxy to demo-services
     location ~ ^/_proxy/demo-services/? {
+
+        # cors related config
+        add_header Access-Control-Allow-Headers "X-Requested-With";
+        add_header Access-Control-Allow-Methods "GET, HEAD, OPTIONS";
+        add_header Access-Control-Allow-Origin "*";
+
         # define the upstream as a variable
         # use the docker embedded DNS server at 127.0.0.11
         # this will allow nginx to start/run also if the upstream-server is not available

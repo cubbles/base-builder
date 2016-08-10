@@ -8,16 +8,17 @@ var vorpal = require('vorpal')();
 /*
   load commands
  */
-require('./lib/setup/pull.js')(vorpal);
-require('./lib/test/api-test.js')(vorpal);
-require('./lib/runtime-controller/up.js')(vorpal);
-require('./lib/runtime-controller/down.js')(vorpal);
-require('./lib/runtime-controller/restart.js')(vorpal);
-require('./lib/runtime-controller/ps.js')(vorpal);
-require('./lib/runtime-controller/logs.js')(vorpal);
-require('./lib/replication-manager/replication-init.js')(vorpal);
-require('./lib/backup+restore/backup.js')(vorpal);
-require('./lib/backup+restore/restore.js')(vorpal);
+require('./commands/setup/pull.js')(vorpal);
+require('./commands/test-base-api/test-base-api.js')(vorpal);
+require('./commands/test-demo-services/test-demo-services_couchdb.js')(vorpal);
+require('./commands/runtime-controller/up.js')(vorpal);
+require('./commands/runtime-controller/down.js')(vorpal);
+require('./commands/runtime-controller/restart.js')(vorpal);
+require('./commands/runtime-controller/ps.js')(vorpal);
+require('./commands/runtime-controller/logs.js')(vorpal);
+require('./commands/replicator/add-replication.js')(vorpal);
+require('./commands/backup+restore/backup.js')(vorpal);
+require('./commands/backup+restore/restore.js')(vorpal);
 
 var args = cleanArgs(__filename, JSON.parse(JSON.stringify(process.argv)));
 if (process.argv.indexOf('-i') > -1) {

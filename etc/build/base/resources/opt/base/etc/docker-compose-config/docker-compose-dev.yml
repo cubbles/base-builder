@@ -3,11 +3,6 @@ version: '2'
 services:
   #_____________________________________________________
   #
-  base.testsuite:
-    volumes:
-      - /mnt/sda1/projects.webbles/git/base/base-builder/etc/build/base.testsuite/opt/testsuite:/opt/testsuite/:ro
-  #_____________________________________________________
-  #
   base.gateway:
     environment:
       - NODEMON_OPTIONS=-L -e conf,locations,ssl --watch /opt/base/gateway
@@ -42,6 +37,7 @@ services:
   base.coredatastore:
     ports:
       - "5984:5984"
+
 #========================================================
 # volumes
 # volumes:

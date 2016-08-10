@@ -35,6 +35,7 @@ function setup {
 
     # 0) create admin
     echo "create admin account (ignore error, if account already exists )"
+    echo " ... curl -X PUT http://${HOST}/_config/admins/${LOGIN}"
     local responseSecure="$(curl -X PUT http://${HOST}/_config/admins/${LOGIN} -d '"'"${PASSWORD}"'"')"
     echo $responseSecure
 

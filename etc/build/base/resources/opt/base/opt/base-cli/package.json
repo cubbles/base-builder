@@ -8,8 +8,14 @@
   "author": "Hd Böhlau",
   "license": "Apache-2.0",
   "dependencies": {
-    "nano": "^6.1.5",
-    "promise": "^7.1.1",
-    "vorpal": "^1.4.0"
+    "jsonwebtoken": "7.1.7",
+    "mocha": "2.5.3",
+    "nano": "6.2.0",
+    "node-uuid": "1.4.7",
+    "promise": "7.1.1",
+    "superagent": "1.8.3",
+    "supercouch": "0.2.4",
+    "url-join": "0.0.1",
+    "vorpal": "1.11.4"
   }
 }

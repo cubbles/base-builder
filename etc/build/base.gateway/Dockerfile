@@ -1,4 +1,4 @@
-FROM cubbles/base.abstract-node:0.1.0
+FROM cubbles/base.abstract-node:0.2.0
 
 MAINTAINER Hd Böhlau hans-dieter.boehlau@incowia.com
 

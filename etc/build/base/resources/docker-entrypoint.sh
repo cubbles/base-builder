@@ -13,8 +13,12 @@ if [ "$1" == "/bin/bash" ]; then
     exec "$@"
     exit 0
 fi
+if [ "$1" == "base-cli-test" ]; then
+    cd "/opt/base/opt/base-cli"
+    exec node base-cli-test.js "$@"
+    exit 0
+fi
 
-# otherwise execute the passed command
-# @see https://docs.docker.com/articles/dockerfile_best-practices/
+# otherwise pass the options to the base-cli
 cd "/opt/base/opt/base-cli"
 exec node base-cli.js "$@"

@@ -4,6 +4,12 @@ services:
   #_____________________________________________________
   #
   base.gateway:
+    environment:
+      - SSL_CERT=/opt/base/gateway/conf.d/cert/www.cubbles.world.ssl.crt
+      - SSL_CERT_KEY=/opt/base/gateway/conf.d/cert/www.cubbles.world.ssl.key
+      - SSL_CERT_WEBBLEBASENET=/opt/base/gateway/conf.d/cert/webblebase.net.crt
+      - SSL_CERT_KEY_WEBBLEBASENET=/opt/base/gateway/conf.d/cert/webblebase.net.key
+      - BASE_AUTH_SECRET=cNa081#nulB3!
     ports:
       - 80:80
       - 443:443
@@ -20,9 +26,10 @@ services:
   base.webpackagesearch:
 
   #_____________________________________________________
-  #
+  # serviceconfig: central configuration
   base.serviceconfig:
-
+    volumes:
+      - /opt/www.cubbles.world/cert:/opt/base/gateway/conf.d/cert:ro
   #_____________________________________________________
   #
   base.coredatastore:

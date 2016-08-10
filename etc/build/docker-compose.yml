@@ -9,16 +9,16 @@ services:
     image: cubbles/base
   #_____________________________________________________
   #
+  base.abstract-couchdb:
+    build:
+      context: ./base.abstract-couchdb
+    image: cubbles/base.abstract-couchdb
+  #_____________________________________________________
+  #
   base.abstract-node:
     build:
       context: ./base.abstract-node
     image: cubbles/base.abstract-node
-  #_____________________________________________________
-  #
-  base.testsuite:
-    build:
-      context: ./base.testsuite
-    image: cubbles/base.testsuite
   #_____________________________________________________
   #
   base.gateway:

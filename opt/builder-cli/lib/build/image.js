@@ -76,7 +76,7 @@ module.exports = function (vorpal) {
         console.error(err);
         onError(err)
       } else {
-        console.info('For the whole output see \n "%s"', logFile);
+        console.info('Output has been saved in file \n "%s"', logFile);
         console.info('-----------');
         fs.writeFileSync(logFile, logObject.content);
         onSuccess && onSuccess()
