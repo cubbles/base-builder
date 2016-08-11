@@ -66,4 +66,55 @@ describe(suite,
       });
 
     }).timeout(10000);
+
+    it('checks anonymous remote replication', function (done) {
+      function _checkReplicationDoc (replicationDocId) {
+        request
+          .get("http://" + opts[ 'adminCredentials' ] + "@base.coredatastore:5984/_replicator/" + replicationDocId)
+          .end(function (err, res) {
+            assert(res != null);
+            assert.equal(res.statusCode, 200);
+            var responseJSON = JSON.parse(res.text);
+            // console.log(responseJSON);
+            assert.equal(responseJSON[ '_replication_state' ], 'completed');
+            done();
+          });
+      }
+
+      // ---- main ----
+      var replication = childProcess.fork('base-cli.js', "add-replication http://base.gateway/core base-cli-test_replicate -u admin -p admin".split(" "));
+      replication.on('message', function (message) {
+        assert(message.ok === true, 'Expected the replicationDoc to be successfully created.');
+        assert(typeof(message.id) === 'string');
+        assert(typeof(message.rev) === 'string');
+        // console.log('PARENT got message:', message);
+        setTimeout(_checkReplicationDoc, 2000, [ message.id ]);
+      });
+    }).timeout(10000);
+
+    // skip this, as there is currently no authorization configured
+    it.skip('checks >authorized< remote replication', function (done) {
+      function _checkReplicationDoc (replicationDocId) {
+        request
+          .get("http://" + opts[ 'adminCredentials' ] + "@base.coredatastore:5984/_replicator/" + replicationDocId)
+          .end(function (err, res) {
+            assert(res != null);
+            assert.equal(res.statusCode, 200);
+            var responseJSON = JSON.parse(res.text);
+            // console.log(responseJSON);
+            assert.equal(responseJSON[ '_replication_state' ], 'completed');
+            done();
+          });
+      }
+
+      // ---- main ----
+      var replication = childProcess.fork('base-cli.js', "add-replication http://base.gateway/core base-cli-test_replicate -u admin -p admin -r user:pass".split(" "));
+      replication.on('message', function (message) {
+        assert(message.ok === true, 'Expected the replicationDoc to be successfully created.');
+        assert(typeof(message.id) === 'string');
+        assert(typeof(message.rev) === 'string');
+        // console.log('PARENT got message:', message);
+        setTimeout(_checkReplicationDoc, 2000, [ message.id ]);
+      });
+    });
   });

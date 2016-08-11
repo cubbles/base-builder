@@ -68,7 +68,6 @@
         add_header Access-Control-Allow-Methods "GET, HEAD, OPTIONS";
         add_header Access-Control-Allow-Origin "*";
 
-        # authentication
         limit_except GET HEAD {
             deny  all;
         }
@@ -152,8 +151,12 @@
         # couchdb-api details see http://docs.couchdb.org/en/1.6.1/http-api.html
 
         # authentication
-        auth_basic "Restricted";
-        auth_basic_user_file /opt/gateway/conf.d/_replicate-htpasswd;
+        #auth_basic "Restricted";
+        #auth_basic_user_file /opt/gateway/conf.d/_replicate-htpasswd;
+
+        limit_except GET HEAD {
+            deny  all;
+        }
 
         # proxy target
         rewrite ^/([a-z0-9-]+)/_api/replicate/?$ /webpackage-store-$1 break;
