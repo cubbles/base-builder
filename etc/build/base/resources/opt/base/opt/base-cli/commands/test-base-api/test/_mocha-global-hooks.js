@@ -16,8 +16,8 @@ var dbReplicaName = opts.dbNamePrefix + '-' + opts.replicaStoreName;
 var userDoc = {
   _id: 'org.couchdb.user:base-api-test-user',
   name: 'base-api-test-user',
-  logins:{
-    local:{
+  logins: {
+    local: {
       login: 'base-api-test-user'
     }
   },
@@ -80,22 +80,42 @@ function replicateFromCore (done) {
         console.log('replication from core failed', err);
         return done(err);
       }
-      addStoreDocument(done);
+      addStoreDocuments(done);
     });
 }
 
-function addStoreDocument (done) {
-  var doc = { _id: 'pack@1.0.0', foo: 'bar' };
-  console.log('Creating document: %s\n', doc._id);
-  couch
-    .db(dbName)
-    .insert(doc)
-    .end(function (err, res) {
-      if (err) {
-        console.log('document insert failed', err);
-        return done(err);
+function addStoreDocuments (done) {
+  var doc1 = {
+    _id: 'pack@1.0.0-SNAPSHOT',
+    foo: 'bar',
+    _attachments: {
+      "snapshot.txt": {
+        content_type: "text/plain",
+        data: "VGhpcyBpcyBhIGJhc2U2NCBlbmNvZGVkIHRleHQ="
       }
-      done();
+    }
+  };
+  var doc2 = {
+    _id: 'pack@1.0.0',
+    foo: 'bar',
+    _attachments: {
+      "final.txt": {
+        content_type: "text/plain",
+        data: "VGhpcyBpcyBhIGJhc2U2NCBlbmNvZGVkIHRleHQ="
+      }
+    }
+  };
+  console.log('Creating documents: %s\n', doc1._id, doc2._id);
+  couch
+    .db(dbName).insert(doc1)
+    .end(function (err, res) {
+      if (err) { return done(err)}
+      couch
+        .db(dbName).insert(doc2)
+        .end(function (err, res) {
+          if (err) { return done(err)}
+          done();
+        });
     });
 }
 

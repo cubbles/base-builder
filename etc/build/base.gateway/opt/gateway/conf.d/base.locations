@@ -73,6 +73,13 @@
             deny  all;
         }
 
+        if ($uri ~ "@[0-9-\.]+-SNAPSHOT/(.)+" ) {
+            expires 1m;
+        }
+        if ($uri ~ "@[0-9-\.]+/(.)+" ) {
+            expires max;
+        }
+
         # proxy target
         rewrite ^/(.*)$ /webpackage-store-$1 break;
         proxy_pass http://coredatastore:5984;
