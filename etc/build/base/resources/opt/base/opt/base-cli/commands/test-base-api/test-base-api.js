@@ -22,13 +22,13 @@ module.exports = function (vorpal) {
      */
     // Instantiate a Mocha instance.
     var mocha = new Mocha({});
-    mocha.addFile('lib/test-base-api/test/_mocha-global-hooks.js');
-    mocha.addFile('lib/test-base-api/test/authentication-api.js');
-    mocha.addFile('lib/test-base-api/test/download-api-storelevel.js');
-    mocha.addFile('lib/test-base-api/test/replicate-api-storelevel.js');
-    mocha.addFile('lib/test-base-api/test/search-api-storelevel.js');
-    mocha.addFile('lib/test-base-api/test/upload-api-storelevel.js');
-    mocha.addFile('lib/test-base-api/test/upload-api-storelevelWithCookie.js');
+    mocha.addFile('commands/test-base-api/test/_mocha-global-hooks.js');
+    mocha.addFile('commands/test-base-api/test/authentication-api.js');
+    mocha.addFile('commands/test-base-api/test/download-api-storelevel.js');
+    mocha.addFile('commands/test-base-api/test/replicate-api-storelevel.js');
+    mocha.addFile('commands/test-base-api/test/search-api-storelevel.js');
+    mocha.addFile('commands/test-base-api/test/upload-api-storelevel.js');
+    mocha.addFile('commands/test-base-api/test/upload-api-storelevelWithCookie.js');
 
     var resultLog = '';
     var failedLog = '';

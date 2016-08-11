@@ -14,7 +14,7 @@ module.exports = function (vorpal) {
     .command('add-replication <source> <target>')
     .option('-w, --webpackages [optionalList]', 'A comma separated list of webpackageIds: package-a@1.0,package-b@1.1')
     .option('-u, --username <value>', 'This user is allowed to create replication docs.')
-    .option('-p, --password <value>', 'The user`s password.')
+    .option('-p, --password <value>', 'The user\'s password.')
     .option('-a, --acceptunauthorizedssl [optionalBoolean]', 'Accept unauthorized ssl certs (default=false).')
     .option('-c, --continuous [optionalBoolean]', 'Replicate continuously (default=false).')
     .option('-v, --verbose [optionalBoolean]', 'Print details.')
@@ -111,8 +111,14 @@ module.exports = function (vorpal) {
               done(err);
               return;
             }
-            console.log(body); // this output is expected - do not remove it
-            process.send(body);
+
+            // log the result to the uses stdout
+            console.log(body);
+
+            // send the result, if this is a child process (e.g. called from a testcase)
+            if(process.send) {
+              process.send(body);
+            }
             done();
           });
       });

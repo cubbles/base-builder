@@ -77,7 +77,7 @@ function replicateFromCore (done) {
     .send('{"source":"webpackage-store-core","target":"' + dbName + '", "doc_ids":["_design/couchapp-webpackage-validator"]}')
     .end(function (err, res) {
       if (err) {
-        console.log('replication form core failed', err);
+        console.log('replication from core failed', err);
         return done(err);
       }
       addStoreDocument(done);
@@ -102,6 +102,7 @@ function addStoreDocument (done) {
 before(function (done) {
   // function: create a test user
   console.log('before ....');
+  console.log('credentials: ', process.env[ "BASE_AUTH_DATASTORE_ADMINCREDENTIALS" ]);
   function addUser (next) {
     console.log('Creating user: %s\n', userDoc._id);
     couch
@@ -110,7 +111,7 @@ before(function (done) {
       .end(function (err, res) {
         // return if user does already exist
         if (res) {
-          next()
+          next();
           return;
         }
         couch

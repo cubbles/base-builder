@@ -5,10 +5,13 @@ services:
   #
   base.gateway:
     environment:
-      - NODEMON_OPTIONS=-L -e conf,locations,ssl --watch /opt/base/gateway
+      - NODEMON_OPTIONS=-L -e conf,locations,ssl --watch /opt/gateway
     ports:
       - 80:80
       - 443:443
+    volumes:
+      - /mnt/sda1/projects.webbles/git/base/base-builder/etc/build/base.gateway/opt/gateway:/opt/gateway:rw
+
   #_____________________________________________________
   #
   base.authentication:
@@ -21,17 +24,6 @@ services:
   base.userprofilemanagement:
     environment:
       - NODEMON_OPTIONS=-L --watch /opt/userprofilemanagement/base-userprofilemanagement-service/service.js --watch /opt/userprofilemanagement/base-userprofilemanagement-service/lib
-  #_____________________________________________________
-  #
-  base.webpackagesearch:
-
-  #_____________________________________________________
-  #
-  base.serviceconfig:
-    volumes:
-      - /mnt/sda1/projects.webbles/git/base/base-builder/etc/build/base.serviceconfig/opt/base/gateway:/opt/base/gateway:rw
-      #- /mnt/sda1/projects.webbles/git/base/base/etc/cert:/opt/base/gateway/conf.d/cert:rw
-
   #_____________________________________________________
   #
   base.coredatastore:

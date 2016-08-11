@@ -39,18 +39,6 @@ services:
     image: cubbles/base.userprofilemanagement
   #_____________________________________________________
   #
-  base.webpackagesearch:
-    build:
-      context: ./base.webpackagesearch
-    image: cubbles/base.webpackagesearch
-  #_____________________________________________________
-  # serviceconfig: central configuration
-  base.serviceconfig:
-    build:
-      context: ./base.serviceconfig
-    image: cubbles/base.serviceconfig
-  #_____________________________________________________
-  #
   base.coredatastore:
     build:
       context: ./base.coredatastore

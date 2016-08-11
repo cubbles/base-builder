@@ -30,7 +30,7 @@ var opts = require('nomnom')
   })
   .option('couchUrl', {
     type: 'string',
-    default: 'http://admin:admin@base.coredatastore:5984'
+    default: 'http://' + process.env[ "BASE_AUTH_DATASTORE_ADMINCREDENTIALS" ] + '@base.coredatastore:5984'
   })
   .option('storeName', {
     type: 'string',
@@ -38,7 +38,8 @@ var opts = require('nomnom')
   })
   .option('finallyRemoveTestData', {
     type: 'boolean',
-    default: process.env.REMOVE_TESTDATA ? JSON.parse(process.env.REMOVE_TESTDATA) : true
+    // default: process.env.REMOVE_TESTDATA ? JSON.parse(process.env.REMOVE_TESTDATA) : true
+    default: false
   })
   .option('dbNamePrefix', {
     type: 'string',
