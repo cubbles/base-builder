@@ -24,6 +24,20 @@ describe(suite,
         });
     });
 
+    it(suite + ' > check, that putting a document results in an ERROR', function (done) {
+      var docId = 'pack-replicate-put-' + Math.floor(Math.random() * 1000000) + '@1.0.0';
+      var doc = { foo: 'bar' };
+      var url = urljoin(opts.baseReplicateUrl, opts.storeName, apiPath, docId);
+      request
+        .put(url)
+        .send(doc)
+        .end(function (err, res) {
+          assert.notEqual(res.statusCode, 201, "Expecting the document can NOT be created.");
+          assert.notEqual(err, null, "ERROR expected.");
+          done();
+        });
+    });
+
     it(suite + ' > should receive "pack@1.0.0" from source store', function (done) {
       var docId = 'pack@1.0.0';
       var url = urljoin(opts.baseReplicateUrl, opts.storeName, apiPath, docId);

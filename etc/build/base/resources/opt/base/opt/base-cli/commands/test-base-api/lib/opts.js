@@ -18,7 +18,7 @@ var opts = require('nomnom')
   })
   .option('baseUploadUrl', {
     type: 'string',
-    default: 'http://dev:webble%231@base.gateway'
+    default: 'http://base.gateway'
   })
   .option('baseUploadWithCookieUrl', {
     type: 'string',
@@ -26,7 +26,7 @@ var opts = require('nomnom')
   })
   .option('baseReplicateUrl', {
     type: 'string',
-    default: 'http://replicator:webble%231@base.gateway'
+    default: 'http://base.gateway'
   })
   .option('couchUrl', {
     type: 'string',

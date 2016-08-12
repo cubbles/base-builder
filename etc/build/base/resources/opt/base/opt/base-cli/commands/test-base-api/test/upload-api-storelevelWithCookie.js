@@ -55,7 +55,7 @@ describe(suite,
         }
         done()
       });
-    });
+    }).timeout(3000);
 
     // 401 Unauthorized (invalid token)
     // use http://jwt.io/ to prepare a token

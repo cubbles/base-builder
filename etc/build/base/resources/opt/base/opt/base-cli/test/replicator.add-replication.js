@@ -76,19 +76,23 @@ describe(suite,
             assert.equal(res.statusCode, 200);
             var responseJSON = JSON.parse(res.text);
             // console.log(responseJSON);
-            assert.equal(responseJSON[ '_replication_state' ], 'completed');
+            var _replication_state_reason;
+            if(responseJSON[ '_replication_state_reason' ]) {
+              _replication_state_reason = responseJSON[ '_replication_state_reason' ];
+            }
+            assert.equal(responseJSON[ '_replication_state' ], 'completed', `Expected replication with id "${replicationDocId}" to be completed. [Reason: ${_replication_state_reason}]`);
             done();
           });
       }
 
       // ---- main ----
-      var replication = childProcess.fork('base-cli.js', "add-replication http://base.gateway/core base-cli-test_replicate -u admin -p admin".split(" "));
+      var replication = childProcess.fork('base-cli.js', "add-replication http://base.gateway/core base-cli-test_replicate-anonymous -u admin -p admin".split(" "));
       replication.on('message', function (message) {
         assert(message.ok === true, 'Expected the replicationDoc to be successfully created.');
         assert(typeof(message.id) === 'string');
         assert(typeof(message.rev) === 'string');
         // console.log('PARENT got message:', message);
-        setTimeout(_checkReplicationDoc, 2000, [ message.id ]);
+        setTimeout(_checkReplicationDoc, 4000, [ message.id ]);
       });
     }).timeout(10000);
 
@@ -102,7 +106,7 @@ describe(suite,
             assert.equal(res.statusCode, 200);
             var responseJSON = JSON.parse(res.text);
             // console.log(responseJSON);
-            assert.equal(responseJSON[ '_replication_state' ], 'completed');
+            assert.equal(responseJSON[ '_replication_state' ], 'completed', `Expected replication with id "${replicationDocId}" to be completed.`);
             done();
           });
       }
