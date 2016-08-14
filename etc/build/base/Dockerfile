@@ -32,10 +32,7 @@ RUN apt-get update -q \
 #ENTRYPOINT ["/usr/local/bin/docker-compose"]
 #CMD ["--version"]
 
-#################
-# base-cli
-#################
-COPY ./resources/opt/base/opt/base-cli /opt/base/opt/base-cli
+COPY ./resources/opt/base /opt/base
 RUN cd /opt/base/opt/base-cli \
  && npm install
 

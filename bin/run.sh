@@ -19,7 +19,6 @@ echo
 
 # define images
 COREDATASTORE="base.coredatastore"
-WEBPACKAGESEARCH="base.webpackagesearch"
 AUTHENTICATION="base.authentication"
 USERPROFILEMANAGEMENT="base.userprofilemanagement"
 
@@ -36,10 +35,6 @@ case "$1" in
 			# image param
 			if [[ "$3" == "$COREDATASTORE" ]]; then {
 				prepare_coredatastore
-			}
-			fi
-			if [[ "$3" == "$WEBPACKAGESEARCH" ]]; then {
-				prepare_webpackagesearch $WORK_DIR
 			}
 			fi
 			if [[ "$3" == "$AUTHENTICATION" ]]; then {

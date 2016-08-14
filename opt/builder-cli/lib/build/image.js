@@ -24,14 +24,13 @@ module.exports = function (vorpal) {
 
   function build (args, done) {
     global.command = { args: args };
-    var composeEnv = process.env;
     var config = {
       options: '-f docker-compose.yml',
       command: 'build',
       commandArgs: args.service,
       commandExecOptions: {
         cwd: path.join(__dirname, '../../../..', 'etc/build'),
-        env: composeEnv
+        env: {maxBuffer: 1024 * 5000}
       },
       envVariables: {}
     };
