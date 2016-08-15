@@ -1,6 +1,6 @@
 {
   "name": "base-builder",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A toolset to build containers for a Cubbles-Base.",
   "repository": {
     "type": "git",
