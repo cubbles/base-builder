@@ -30,7 +30,7 @@ module.exports = function (vorpal) {
       commandArgs: args.service,
       commandExecOptions: {
         cwd: path.join(__dirname, '../../../..', 'etc/build'),
-        env: {maxBuffer: 1024 * 5000}
+        env: {maxBuffer: 1024 * 10000}
       },
       envVariables: {}
     };

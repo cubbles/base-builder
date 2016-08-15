@@ -120,8 +120,9 @@ function addStoreDocuments (done) {
 }
 
 before(function (done) {
-  // function: create a test user
+    this.timeout(3000);
   console.log('before ....');
+
   console.log('credentials: ', process.env[ "BASE_AUTH_DATASTORE_ADMINCREDENTIALS" ]);
   function addUser (next) {
     console.log('Creating user: %s\n', userDoc._id);
@@ -146,7 +147,6 @@ before(function (done) {
           });
       });
   }
-
   // add testuser and test-database
   addUser(function () {
     removeDb(done, addDb);

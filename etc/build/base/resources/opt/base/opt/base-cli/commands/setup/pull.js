@@ -35,7 +35,7 @@ module.exports = function (vorpal) {
         done(error);
         return
       }
-      stdout && console.log('Compose Response:') && console.log(stdout);
+      stdout && console.log('Command Response:') && console.log(stdout);
       //stderr && console.log('stderr: ', stderr);
     });
   }

@@ -36,7 +36,7 @@ prepare_authentication(){
   echo "Accessing Git ..."
   sudo GIT_SSL_NO_VERIFY=true git clone https://base-builder:k5TR6J25wQDuT37anAqE@pmt.incowia.de/webble/r/base/authentication/base-authentication-service.git
   echo "Accessing Git ... done."
-  cd base-authentication-service && sudo GIT_SSL_NO_VERIFY=true git fetch && sudo git checkout v0.1.0 && sudo rm -rf .git && cd ..
+  cd base-authentication-service && sudo GIT_SSL_NO_VERIFY=true git fetch && sudo git checkout v0.1.1 && sudo rm -rf .git && cd ..
 }
 
 prepare_userprofilemanagement(){

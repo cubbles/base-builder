@@ -43,7 +43,7 @@ describe(suite, function() {
                 // token example: 'eyJ0eXAiOiJ9.eyJ1c2VyIjoiYmFzZS1hcG.eyJ1c2VyIjoiYmFzZS1h
                 var count = access_token ? access_token.match(/\./g).length : 0;
                 assert.equal(count, 0, 'invalid token structure');
-                assert.equal(res.headers['www-authenticate'], 'Bearer error="incomplete_credentials", error_description="The request did not contain all expected credential information."', 'Expected another authenticate-header.');
+                assert.equal(res.headers['www-authenticate'], 'Error="incomplete_credentials", error_description="The request did not contain all expected credential information."', 'Expected another authenticate-header.');
                 assert.equal(res.statusCode, 403);
                 done();
             });
