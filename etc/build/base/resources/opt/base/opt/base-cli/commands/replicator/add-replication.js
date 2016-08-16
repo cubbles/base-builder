@@ -119,10 +119,13 @@ module.exports = function (vorpal) {
     if (args.options.webpackages) {
       replicationDoc.doc_ids = _parseArrayFromWebpackagesOption(args.options.webpackages);
     }
-    // optionally set authorization headers
+    // optionally set source authorization headers
     if (args.options.replicationsourcecredentials) {
       var buffer = new Buffer(args.options.replicationsourcecredentials);
-      replicationDoc.headers = { Authorization: "Basic " + buffer.toString('base64') }
+      replicationDoc.source = {
+        url: replicationDoc.source,
+        headers: { Authorization: "Basic " + buffer.toString('base64') }
+      };
     }
     return replicationDoc
   }
