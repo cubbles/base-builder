@@ -20,7 +20,7 @@ services:
   #_____________________________________________________
   #
   base.authentication:
-    image: cubbles/base.authentication:1.0
+    image: cubbles/base.authentication:1.0.1
     environment:
       - NODEMON_OPTIONS=--watch /opt/authentication/base-authentication-service/authentication-service.js --watch /opt/authentication/base-authentication-service/lib
       - BASE_AUTH_DATASTORE_URL=http://coredatastore:5984
