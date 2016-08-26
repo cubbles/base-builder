@@ -15,6 +15,12 @@ services:
     image: cubbles/base.abstract-couchdb
   #_____________________________________________________
   #
+  base.abstract-nginx:
+    build:
+      context: ./base.abstract-nginx
+    image: cubbles/base.abstract-nginx
+  #_____________________________________________________
+  #
   base.abstract-node:
     build:
       context: ./base.abstract-node

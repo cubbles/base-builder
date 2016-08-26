@@ -4,7 +4,7 @@ services:
   #_____________________________________________________
   #
   base.gateway:
-    image: cubbles/base.gateway:1.0
+    image: cubbles/base.gateway:1.0.2
     environment:
       - NODEMON_OPTIONS=-e conf,locations,ssl,lua --watch /opt/gateway
       - SSL_CERT=/opt/gateway/conf.d/cert/self_signed_server.crt

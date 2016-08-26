@@ -34,36 +34,41 @@ module.exports = function (vorpal) {
       },
       envVariables: {}
     };
-    /*
-     * build image
-     */
-    execCompose(config, function (error, stdout, stderr) {
-      if (error) {
-        console.error('exec error: ', error);
-        writeLogfile({ content: error, service: args.service }, done);
-        return
-      }
-      stdout && console.log(stdout);
-      writeLogfile({ content: stdout, service: args.service }, done, function () {
-        var imageQName = 'cubbles/' + args.service;
-        if (args.options.tag) {
-          /*
-           * tag image
-           */
-          var taggedImageQName = imageQName + ':' + args.options.tag;
-          exec('docker tag ' + imageQName + ':latest ' + taggedImageQName, {}, function (error, stdout, stderr) {
-            if (error) {
-              console.error('exec error: ', error);
-              return
-            }
-            console.log('\n Image "%s" successfully created.\n', taggedImageQName);
-            stdout && console.log(stdout);
-          });
-        } else {
-          console.log('\n Image "%s:latest" successfully created.\n', imageQName);
+
+    if(args.service == 'base.gateway'){
+      console.error('Please consider the README.md to build the image using "docker build"');
+    } else {
+      /*
+       * build image with docker-compose
+       */
+      execCompose(config, function (error, stdout, stderr) {
+        if (error) {
+          console.error('exec error: ', error);
+          writeLogfile({ content: error, service: args.service }, done);
+          return
         }
-      })
-    });
+        stdout && console.log(stdout);
+        writeLogfile({ content: stdout, service: args.service }, done, function () {
+          var imageQName = 'cubbles/' + args.service;
+          if (args.options.tag) {
+            /*
+             * tag image
+             */
+            var taggedImageQName = imageQName + ':' + args.options.tag;
+            exec('docker tag ' + imageQName + ':latest ' + taggedImageQName, {}, function (error, stdout, stderr) {
+              if (error) {
+                console.error('exec error: ', error);
+                return
+              }
+              console.log('\n Image "%s" successfully created.\n', taggedImageQName);
+              stdout && console.log(stdout);
+            });
+          } else {
+            console.log('\n Image "%s:latest" successfully created.\n', imageQName);
+          }
+        })
+      });
+    }
   }
 
   function writeLogfile (logObject, onError, onSuccess) {

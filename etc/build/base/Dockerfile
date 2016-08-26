@@ -1,7 +1,7 @@
 FROM cubbles/base.abstract-node:0.2.0
 MAINTAINER Hd Böhlau hans-dieter.boehlau@incowia.com
 
-# This container is the root-containter for cubbles/demo-services
+# This container is the root-container for cubbles/base
 # It includes docker-compose - so no need to install docker-compose on the host.
 #
 # Usage:

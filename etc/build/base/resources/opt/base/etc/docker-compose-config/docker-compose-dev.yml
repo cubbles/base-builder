@@ -10,7 +10,7 @@ services:
       - 80:80
       - 443:443
     volumes:
-      - /mnt/sda1/projects.webbles/git/base/base-builder/etc/build/base.gateway/opt/gateway:/opt/gateway:rw
+      - /mnt/sda1/projects.webbles/github/base.gateway/opt/gateway:/opt/gateway:rw
 
   #_____________________________________________________
   #
@@ -28,7 +28,7 @@ services:
   #
   base.coredatastore:
     ports:
-      - "5984:5984"
+      - 5984:5984
 
 #========================================================
 # volumes

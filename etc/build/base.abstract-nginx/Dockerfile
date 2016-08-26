@@ -2,17 +2,29 @@ FROM cubbles/base.abstract-node:0.2.0
 
 MAINTAINER Hd Böhlau hans-dieter.boehlau@incowia.com
 
+######################################################
+# Provide the jessie-backports repo to allow upgrading openssl from 1.0.1 to 1.0.2
+# ====================================================
+# @see https://www.nginx.com/blog/supporting-http2-google-chrome-users/
+# @see http://serverfault.com/a/791953/339942 (debian-jessie-nginx-with-openssl-1-0-2...)
+# @see https://packages.debian.org/jessie-backports/openssl
+RUN echo "deb http://ftp.debian.org/debian jessie-backports main" >> /etc/apt/sources.list \
+    &&set -x \
+    && apt-get update \
+    && apt-get install -y --no-install-recommends openssl
+
 #############################
-# nginx
-# =====
+# nginx: get sources
+# ==================
 
 # Please modify if it's neccessary to use another version
-ENV NGINX_VERSION 1.9.7
+# https://nginx.org/en/CHANGES
+ENV NGINX_VERSION 1.11.3
 ENV NGINX_DEV_KIT 0.2.19
 ENV VER_LUAJIT 2.0.4
 ENV LUAJIT_LIB /usr/local/lib
 ENV LUAJIT_INC /usr/local/include/luajit-2.0
-ENV NGINX_LUA_MODULE 0.10.0
+ENV NGINX_LUA_MODULE 0.10.6
 ENV nginxHome /usr/local/nginx
 ENV nginxConf /etc/nginx/nginx.conf
 
@@ -24,12 +36,15 @@ ENV nginxConf /etc/nginx/nginx.conf
     # libpcre3-dev = library needed to build the rewrite module of nginx
     # libssl-dev = library needed to build ssl/https support in nginx
     # libncurses-dev, libreadline-dev = needed for LUA module
-ENV buildDeps='build-essential libpcre3-dev libssl-dev libncurses-dev libreadline-dev'
+ENV buildDeps='build-essential libpcre3-dev libncurses-dev libreadline-dev'
+ENV buildDepsBackports='libssl-dev'
 
 # prepare the system
-RUN  set -x \
-  && apt-get update && apt-get install -y ${buildDeps} --no-install-recommends \
-  && groupadd -r nginx && useradd -d ${nginxHome} -s /bin/false -g nginx nginx
+RUN set -x \
+    && apt-get update \
+    && apt-get install -y --no-install-recommends ${buildDeps} \
+    && apt-get install -y --no-install-recommends -t jessie-backports ${buildDepsBackports} \
+    && groupadd -r nginx && useradd -d ${nginxHome} -s /bin/false -g nginx nginx
 
 # get the packages
 RUN set -x \
@@ -62,6 +77,10 @@ RUN set -x \
   && gpg --import *.key \
   && gpg --verify nginx-${NGINX_VERSION}.tar.gz.asc
 
+##############################
+# lua: get sources and install
+# ============================
+
 ENV LUA_LIB /usr/local/lib
 ENV LUA_INC /usr/local/include
 
@@ -74,13 +93,15 @@ RUN set -x \
 
 # compile and install LuaJIT
 WORKDIR /usr/local/src/LuaJIT-${VER_LUAJIT}
-RUN make
-RUN make install
+RUN make && make install
 
-# configure and compile nginx
+###############################
+# nginx: configure and compile
+# =============================
+
 RUN set -x \
-  && cd /usr/local/src/nginx-${NGINX_VERSION} \
-  && ./configure \
+    && cd /usr/local/src/nginx-${NGINX_VERSION} \
+    && ./configure \
         --prefix=${nginxHome} \
         --conf-path=${nginxConf} \
         --with-http_ssl_module \
@@ -88,7 +109,7 @@ RUN set -x \
         --with-ld-opt="-Wl,-rpath,${LUAJIT_LIB}" \
         --add-module=/usr/local/src/ngx_devel_kit-${NGINX_DEV_KIT} \
         --add-module=/usr/local/src/lua-nginx-module-${NGINX_LUA_MODULE} \
-  && make -j2 && make install
+    && make -j2 && make install
 
 # load modules: lua-cjson
 ENV LUA_CJSON lua-cjson-2.1.0
@@ -102,23 +123,19 @@ RUN curl -SLO "http://www.kyne.com.au/%7Emark/software/download/${LUA_CJSON}.tar
 RUN set -x \
   && apt-get -y purge $buildDeps && apt-get autoremove -y \
 # autoremove is a bit too ambitious, so we need to reinstall some necessary libs
-  && apt-get install -y libpcre3 libssl1.0.0 \
+  && apt-get install -y libpcre3  \
+  && apt-get install -y --no-install-recommends -t jessie-backports libssl1.0.0 \
   && rm -rf /var/lib/apt/lists/* \
   && rm -rf /usr/local/src/* \
   && rm -f /*.tar.gz
+
+###############################
+# docker related configs
+# =============================
 
 # forward request logs to Docker log collector
 RUN ln -sf /dev/stdout /var/log/nginx-access.log
 RUN ln -sf /dev/stderr /var/log/nginx-error.log
 
-# provide service
-COPY ./opt/gateway /opt/gateway
-
-# provide entrypoint
-COPY ./docker-entrypoint.sh /entrypoint.sh
-
-EXPOSE 80 443
+EXPOSE 80
 WORKDIR $nginxHome
-
-ENTRYPOINT ["/entrypoint.sh"]
-CMD ["nginx"]
